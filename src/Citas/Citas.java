@@ -23,6 +23,7 @@ String Dia;
         this.Hora=hora;
         this.setText(noCita);
         System.out.println("Esta es la hora: "+Hora);
+        //HOLA
         
     }
     

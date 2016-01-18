@@ -14,6 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import javax.swing.JOptionPane;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -28,7 +29,7 @@ public class Medical {
 
     
     
-    public static void main(String[] args) throws IOException, ClientProtocolException, JSONException {
+    public static void main(String[] args) throws IOException, ClientProtocolException, JSONException, ParseException, java.text.ParseException {
         // TODO code application logic here
          
              try {
