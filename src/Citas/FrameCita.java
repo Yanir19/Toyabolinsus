@@ -116,6 +116,11 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     int hora;
     
     
+    //VARIABLES PARA LA CONSULTA DE LA BASE DE DATOS
+    String url = "http://localhost/API_Citas/public/Citas/getCitas_dia/" +"2016-1-5" ;
+    
+    
+    
     ////////////// ELEMENTOS DEL PANEL DETALLE
     
     
@@ -627,7 +632,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                         Citas seleccion = new Citas();
                         seleccion = (Citas) e.getComponent();
                         System.out.println("Label  clickeado" +  seleccion.getText() );
-                        acciones(seleccion);
+                        acciones(seleccion);  
                     }
                 });
                 
@@ -837,10 +842,10 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             modificarB.setEnabled(false);
             agregarB.setEnabled(false);
             eliminarB.setEnabled(false);
-            fechaJ.setText(cita.Dia);
-            horaJ.setText(cita.Hora);
-            nombreJ.setText(cita.Paciente);
-            cedulaJ.setText(cita.Cedula);
+       /*     fechaJ.setText(cita.getFecha());
+            horaJ.setText(cita.getHora());
+            nombreJ.setText(cita.getPaciente());
+            cedulaJ.setText(cita.getPaciente()); */
             fechaJ.setEditable(false);
             horaJ.setEditable(false);
             nombreJ.setEditable(false);
@@ -887,6 +892,9 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         PanelCita = new javax.swing.JPanel();
         FechaLbl = new javax.swing.JLabel();
         PanelDetalle = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 500));
@@ -931,6 +939,14 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             .addGap(0, 200, Short.MAX_VALUE)
         );
 
+        jMenu1.setText("Citas");
+        jMenuBar1.add(jMenu1);
+
+        jMenu3.setText("Configuración");
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -955,7 +971,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(PanelCita, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(PanelCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         pack();
@@ -1017,6 +1033,9 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     private javax.swing.JPanel PanelCita;
     private javax.swing.JPanel PanelDetalle;
     private com.toedter.calendar.JCalendar jCalendar1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JOptionPane jOptionPane1;
     // End of variables declaration//GEN-END:variables
 }

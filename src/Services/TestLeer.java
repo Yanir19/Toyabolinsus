@@ -1,4 +1,6 @@
 package Services;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,18 +32,27 @@ public class TestLeer {
   HttpClient client = new DefaultHttpClient();
   int id=1;
  // HttpGet get = new HttpGet("http://ip.no-ip.org:8000/ruta");
-    HttpGet get = new HttpGet("http://localhost/API_Medico/public/Citas");
+    HttpGet get = new HttpGet("http://localhost/API_Medico/public/Citas/getCitasdia/2015-1-5");
   
- HttpResponse response = client.execute(get);
+  HttpResponse response = client.execute(get);
   HttpEntity entity= response.getEntity();
   String content = EntityUtils.toString(entity);
   
   System.out.println(response.toString());
  
-   System.out.println(content);
+ //  System.out.println(content);
    JSONArray json = new JSONArray(content);
-   
    System.out.println(json);
+   
+   JsonParser parser = new JsonParser();
+       
+   
+    JsonElement arrayElement = parser.parse(json.toString());
+    
+    System.out.println(arrayElement.getAsJsonArray().size());
+    System.out.println(   arrayElement.getAsJsonArray().get(0).getAsJsonObject().get("fecha").getAsString());
+    
+   
 /*   
   BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
   String line = "";
