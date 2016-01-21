@@ -5,7 +5,14 @@
  */
 package Citas;
 
+import Services.Add;
+import Services.AddUser;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -18,6 +25,7 @@ public class Usuario extends javax.swing.JFrame {
      */
     public Usuario() {
         initComponents();
+        StatusMedico();
     }
 
     /**
@@ -46,6 +54,24 @@ public class Usuario extends javax.swing.JFrame {
         AceptarBtn = new javax.swing.JButton();
         EditarBtn = new javax.swing.JButton();
         SalirBtn = new javax.swing.JButton();
+        MedicoChckBox = new javax.swing.JCheckBox();
+        jLabel8 = new javax.swing.JLabel();
+        EspecialidadTxtF = new javax.swing.JTextField();
+        CompartirChckBox = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
+        AtencionSpin = new javax.swing.JSpinner();
+        MinutosLbl = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        Lunes = new javax.swing.JCheckBox();
+        Martes = new javax.swing.JCheckBox();
+        Miercoles = new javax.swing.JCheckBox();
+        Jueves = new javax.swing.JCheckBox();
+        Viernes = new javax.swing.JCheckBox();
+        Sabado = new javax.swing.JCheckBox();
+        Domingo = new javax.swing.JCheckBox();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        AsistentesList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,42 +111,106 @@ public class Usuario extends javax.swing.JFrame {
             }
         });
 
+        MedicoChckBox.setText("Médico");
+        MedicoChckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MedicoChckBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Especialidad:");
+
+        CompartirChckBox.setText("Compartir información del paciente");
+
+        jLabel9.setText("Tiempo de atención:");
+
+        MinutosLbl.setText("Minutos");
+
+        jLabel11.setText("Días de atención:");
+
+        Lunes.setText("L");
+
+        Martes.setText("M");
+
+        Miercoles.setText("M");
+
+        Jueves.setText("J");
+
+        Viernes.setText("V");
+
+        Sabado.setText("S");
+
+        Domingo.setText("D");
+
+        jLabel10.setText("Asistente:");
+
+        jScrollPane1.setViewportView(AsistentesList);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NombreTxtF)
-                            .addComponent(ApellidoTxtF)
-                            .addComponent(UsuarioTxtF)
-                            .addComponent(PassTxtF)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(IdentificacionTxtF)
-                            .addComponent(TelefonoTxtF)
-                            .addComponent(CorreoTxtF)
-                            .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(AtencionSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(MinutosLbl))
+                                .addComponent(CompartirChckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(NombreTxtF)
+                                    .addComponent(ApellidoTxtF)
+                                    .addComponent(UsuarioTxtF)
+                                    .addComponent(PassTxtF)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(IdentificacionTxtF)
+                                            .addComponent(TelefonoTxtF)
+                                            .addComponent(CorreoTxtF)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(MedicoChckBox)
+                                                    .addComponent(EspecialidadTxtF, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(Lunes)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(Martes)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(Miercoles)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(Jueves)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(Viernes)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(Sabado)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(Domingo)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(SalirBtn)
                                 .addGap(18, 18, 18)
                                 .addComponent(EditarBtn)
                                 .addGap(18, 18, 18)
-                                .addComponent(AceptarBtn)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(AceptarBtn))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -155,10 +245,41 @@ public class Usuario extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(CorreoTxtF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(MedicoChckBox)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AceptarBtn)
-                    .addComponent(EditarBtn)
-                    .addComponent(SalirBtn))
+                    .addComponent(jLabel8)
+                    .addComponent(EspecialidadTxtF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(CompartirChckBox)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(AtencionSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(MinutosLbl))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(Lunes)
+                    .addComponent(Martes)
+                    .addComponent(Miercoles)
+                    .addComponent(Jueves)
+                    .addComponent(Viernes)
+                    .addComponent(Sabado)
+                    .addComponent(Domingo))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(AceptarBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SalirBtn)
+                            .addComponent(EditarBtn))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -170,13 +291,42 @@ public class Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_NombreTxtFActionPerformed
 
     private void AceptarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarBtnActionPerformed
-        if(NombreTxtF.equals("")){
-            if(ApellidoTxtF.equals("")){
-                if(UsuarioTxtF.equals("")){
-                    if(PassTxtF.equals("")){
-                        if(IdentificacionTxtF.equals("")){
+        if(!NombreTxtF.equals("")){
+            if(!ApellidoTxtF.equals("")){
+                if(!UsuarioTxtF.equals("")){
+                    if(!PassTxtF.equals("")){
+                        if(!IdentificacionTxtF.equals("")){
                             
-                                /********* Aqui va el peo ************/
+                            try {
+                                //Usuario
+                                JSONObject Usuario=new JSONObject();
+                                Usuario.put("identificacion",IdentificacionTxtF.getText());
+                                Usuario.put("username",UsuarioTxtF.getText());
+                                Usuario.put("password",PassTxtF.getText());
+                                Usuario.put("name",NombreTxtF.getText());
+                                Usuario.put("last_name",ApellidoTxtF.getText());
+                                Usuario.put("tlf",TelefonoTxtF.getText());
+                                Usuario.put("email", CorreoTxtF.getText());
+                                
+                                if(MedicoChckBox.isSelected()){
+                                    Usuario.put("especialidad", EspecialidadTxtF.getText());
+                                    Usuario.put("comparte", CompartirChckBox.isSelected());
+                                    Usuario.put("tiempoatencion", AtencionSpin.getValue());
+                                    Lunes.isSelected();
+                                    Martes.isSelected();
+                                    Miercoles.isSelected();
+                                    Jueves.isSelected();
+                                    Viernes.isSelected();
+                                    Sabado.isSelected();
+                                    Domingo.isSelected();
+                                }
+                                
+                                new Add().add("http://localhost/API_Citas/public/create", Usuario);
+                                System.out.println(Usuario);
+                            } catch (JSONException | IOException ex) {
+                                Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
                         }else{
                             JOptionPane.showMessageDialog(null, "El campo 'Identificación' no puede estar vacío."  ,"Alerta.", JOptionPane.WARNING_MESSAGE);
                         }
@@ -198,6 +348,39 @@ public class Usuario extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_SalirBtnActionPerformed
 
+    private void MedicoChckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MedicoChckBoxActionPerformed
+        StatusMedico();
+    }//GEN-LAST:event_MedicoChckBoxActionPerformed
+
+    
+    public void StatusMedico(){
+        if(MedicoChckBox.isSelected()){
+            EspecialidadTxtF.setEnabled(true);
+            CompartirChckBox.setEnabled(true);
+            AtencionSpin.setEnabled(true);
+            MinutosLbl.setEnabled(true);
+            Lunes.setEnabled(true);
+            Martes.setEnabled(true);
+            Miercoles.setEnabled(true);
+            Jueves.setEnabled(true);
+            Viernes.setEnabled(true);
+            Sabado.setEnabled(true);
+            Domingo.setEnabled(true);
+        }else{
+            EspecialidadTxtF.setEnabled(false);
+            CompartirChckBox.setEnabled(false);
+            AtencionSpin.setEnabled(false);
+            MinutosLbl.setEnabled(false);
+            Lunes.setEnabled(false);
+            Martes.setEnabled(false);
+            Miercoles.setEnabled(false);
+            Jueves.setEnabled(false);
+            Viernes.setEnabled(false);
+            Sabado.setEnabled(false);
+            Domingo.setEnabled(false);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -236,20 +419,38 @@ public class Usuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AceptarBtn;
     private javax.swing.JTextField ApellidoTxtF;
+    private javax.swing.JList<String> AsistentesList;
+    private javax.swing.JSpinner AtencionSpin;
+    private javax.swing.JCheckBox CompartirChckBox;
     private javax.swing.JTextField CorreoTxtF;
+    private javax.swing.JCheckBox Domingo;
     private javax.swing.JButton EditarBtn;
+    private javax.swing.JTextField EspecialidadTxtF;
     private javax.swing.JTextField IdentificacionTxtF;
+    private javax.swing.JCheckBox Jueves;
+    private javax.swing.JCheckBox Lunes;
+    private javax.swing.JCheckBox Martes;
+    private javax.swing.JCheckBox MedicoChckBox;
+    private javax.swing.JCheckBox Miercoles;
+    private javax.swing.JLabel MinutosLbl;
     private javax.swing.JTextField NombreTxtF;
     private javax.swing.JTextField PassTxtF;
+    private javax.swing.JCheckBox Sabado;
     private javax.swing.JButton SalirBtn;
     private javax.swing.JTextField TelefonoTxtF;
     private javax.swing.JTextField UsuarioTxtF;
+    private javax.swing.JCheckBox Viernes;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,13 @@
  */
 package Citas;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author Yanir
@@ -42,6 +49,22 @@ public class Configuracion extends javax.swing.JFrame {
         CompartirCheckB = new javax.swing.JCheckBox();
         AceptarBtn = new javax.swing.JButton();
         SalirBtn = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        Lunes = new javax.swing.JCheckBox();
+        Martes = new javax.swing.JCheckBox();
+        Miercoles = new javax.swing.JCheckBox();
+        Jueves = new javax.swing.JCheckBox();
+        Viernes = new javax.swing.JCheckBox();
+        Sabado = new javax.swing.JCheckBox();
+        Domingo = new javax.swing.JCheckBox();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jLabel5.setText("jLabel5");
 
@@ -50,6 +73,11 @@ public class Configuracion extends javax.swing.JFrame {
         jLabel1.setText("Usuario:");
 
         EditDatBtn.setText("Editar Datos");
+        EditDatBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditDatBtnActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Tiempo de atención:");
 
@@ -72,6 +100,72 @@ public class Configuracion extends javax.swing.JFrame {
         AceptarBtn.setText("Aceptar");
 
         SalirBtn.setText("Salir");
+        SalirBtn.setMaximumSize(new java.awt.Dimension(71, 23));
+        SalirBtn.setMinimumSize(new java.awt.Dimension(71, 23));
+        SalirBtn.setName(""); // NOI18N
+        SalirBtn.setPreferredSize(new java.awt.Dimension(71, 23));
+
+        jLabel11.setText("Días de atención:");
+
+        Lunes.setText("L");
+
+        Martes.setText("M");
+
+        Miercoles.setText("M");
+
+        Jueves.setText("J");
+
+        Viernes.setText("V");
+
+        Sabado.setText("S");
+
+        Domingo.setText("D");
+
+        jMenu1.setText("Citas");
+
+        jMenuItem4.setText("Ir a panel de citas");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu3.setText("Configuración");
+
+        jMenuItem3.setText("Ir a configuración");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu2.setText("Usuario");
+
+        jMenuItem1.setText("Login");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuItem2.setText("Crear usuario");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,38 +173,53 @@ public class Configuracion extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(EditDatBtn)
-                            .addComponent(CompartirCheckB)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(AtencionSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel3))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(HorarioTxtF1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(HoraCmbBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addComponent(HorarioTxtF2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(HoraCmbBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(67, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(SalirBtn)
-                .addGap(18, 18, 18)
-                .addComponent(AceptarBtn)
-                .addContainerGap())
+                        .addComponent(SalirBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(AceptarBtn))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel4))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(EditDatBtn)
+                                .addComponent(CompartirCheckB)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(AtencionSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jLabel3))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(HorarioTxtF1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(HoraCmbBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(HorarioTxtF2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(HoraCmbBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel11)
+                            .addGap(36, 36, 36)
+                            .addComponent(Lunes)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(Martes)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(Miercoles)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(Jueves)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(Viernes)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(Sabado)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(Domingo))))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,11 +244,21 @@ public class Configuracion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(EditDatBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(Lunes)
+                    .addComponent(Martes)
+                    .addComponent(Miercoles)
+                    .addComponent(Jueves)
+                    .addComponent(Viernes)
+                    .addComponent(Sabado)
+                    .addComponent(Domingo))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AceptarBtn)
-                    .addComponent(SalirBtn))
-                .addContainerGap())
+                    .addComponent(SalirBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,6 +267,37 @@ public class Configuracion extends javax.swing.JFrame {
     private void HorarioTxtF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HorarioTxtF1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_HorarioTxtF1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        try {
+            FrameCita PanelCitas = new FrameCita();
+            PanelCitas.setVisible(true);
+        } catch (IOException | JSONException | ParseException | java.text.ParseException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        Configuracion configuracion = new Configuracion();
+        configuracion.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Login login = new Login();
+        login.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        Usuario user = new Usuario();
+        user.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void EditDatBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDatBtnActionPerformed
+        Usuario user = new Usuario();
+        user.setVisible(true);
+        user.setLocationRelativeTo(null);
+    }//GEN-LAST:event_EditDatBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,17 +338,33 @@ public class Configuracion extends javax.swing.JFrame {
     private javax.swing.JButton AceptarBtn;
     private javax.swing.JSpinner AtencionSpin;
     private javax.swing.JCheckBox CompartirCheckB;
+    private javax.swing.JCheckBox Domingo;
     private javax.swing.JButton EditDatBtn;
     private javax.swing.JComboBox<String> HoraCmbBox1;
     private javax.swing.JComboBox<String> HoraCmbBox2;
     private javax.swing.JTextField HorarioTxtF1;
     private javax.swing.JTextField HorarioTxtF2;
+    private javax.swing.JCheckBox Jueves;
+    private javax.swing.JCheckBox Lunes;
+    private javax.swing.JCheckBox Martes;
+    private javax.swing.JCheckBox Miercoles;
+    private javax.swing.JCheckBox Sabado;
     private javax.swing.JButton SalirBtn;
+    private javax.swing.JCheckBox Viernes;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 }

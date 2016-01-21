@@ -49,6 +49,11 @@ public class Historia extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTextArea1);
 
         AceptarBtn.setText("Aceptar");
+        AceptarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarBtnActionPerformed(evt);
+            }
+        });
 
         SalirBtn.setText("Salir");
 
@@ -107,6 +112,10 @@ public class Historia extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void AceptarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarBtnActionPerformed
+        
+    }//GEN-LAST:event_AceptarBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

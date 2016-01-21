@@ -5,7 +5,7 @@
  */
 package medical;
 
-import Citas.FrameCita;
+import Citas.Login;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +13,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
-import javax.swing.JOptionPane;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -43,8 +42,9 @@ public class Medical {
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Medical.class.getName()).log(Level.SEVERE, null, ex);
         }
-        FrameCita cita = new FrameCita();
-        cita.setVisible(true);
+        Login login = new Login();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
     }
     
 }
