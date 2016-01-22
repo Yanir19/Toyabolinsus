@@ -5,6 +5,15 @@
  */
 package Citas;
 
+import Services.Add;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author Yanir
@@ -29,7 +38,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        UserTxtF = new javax.swing.JTextField();
+        UsuarioTxtF = new javax.swing.JTextField();
         AceptarBtn = new javax.swing.JButton();
         SalirBtn = new javax.swing.JButton();
         PassTxtF = new javax.swing.JPasswordField();
@@ -40,15 +49,25 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña:");
 
-        UserTxtF.addActionListener(new java.awt.event.ActionListener() {
+        UsuarioTxtF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserTxtFActionPerformed(evt);
+                UsuarioTxtFActionPerformed(evt);
             }
         });
 
         AceptarBtn.setText("Aceptar");
+        AceptarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarBtnActionPerformed(evt);
+            }
+        });
 
         SalirBtn.setText("Salir");
+        SalirBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,7 +80,7 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(UserTxtF)
+                    .addComponent(UsuarioTxtF)
                     .addComponent(PassTxtF, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -77,7 +96,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(UserTxtF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UsuarioTxtF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -92,9 +111,36 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void UserTxtFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserTxtFActionPerformed
+    private void UsuarioTxtFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioTxtFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_UserTxtFActionPerformed
+    }//GEN-LAST:event_UsuarioTxtFActionPerformed
+
+    private void AceptarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarBtnActionPerformed
+        try {
+            //Usuario
+            JSONObject Login =new JSONObject();
+            Login.put("username",UsuarioTxtF.getText());
+            String password = new String(PassTxtF.getPassword());
+            Login.put("password",password);
+            System.out.println(""+ password);
+            Add post = new Add();
+            if(post.add("http://localhost/API_Citas/public/login", Login)){
+                FrameCita cita = new FrameCita();
+                cita.setVisible(true);
+                cita.setLocationRelativeTo(null);
+            }else{
+                JOptionPane.showMessageDialog(null, "El usuario o el password son incorrectos"  ,"Error.", JOptionPane.ERROR_MESSAGE);
+            }
+           
+        } catch (JSONException | IOException | ParseException | java.text.ParseException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                            
+    }//GEN-LAST:event_AceptarBtnActionPerformed
+
+    private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_SalirBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,7 +181,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton AceptarBtn;
     private javax.swing.JPasswordField PassTxtF;
     private javax.swing.JButton SalirBtn;
-    private javax.swing.JTextField UserTxtF;
+    private javax.swing.JTextField UsuarioTxtF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
