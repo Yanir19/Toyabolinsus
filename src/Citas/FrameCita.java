@@ -51,6 +51,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
      * Creates new form Cita
      */
      
+    /////////////Panel Historia
+    
     
     //////////////Lecturas y escrituras de la BD
     Leer rutasLeer;
@@ -102,6 +104,9 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     JButton atrasB;
     JButton buscarB;
     
+    // Elementos Panel Pacientes
+    JLabel paciente_nombreL;
+    JLabel paciente_nombreR;
     
     
     JScrollPane scrollPanelCita; //Scroll del panel Cita
@@ -114,7 +119,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     //Para los minutos y horas
     int min;
     int hora;
-    
+    boolean comparteInfo;//Indica si el medico comparte info o no
     
     //VARIABLES PARA LA CONSULTA DE LA BASE DE DATOS
     String url = "http://localhost/API_Citas/public/Citas/getCitas_dia/" +"2016-1-5" ;
@@ -127,12 +132,13 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     public FrameCita() throws ClientProtocolException, IOException, JSONException, ParseException, java.text.ParseException {
         
         initComponents();
+        System.out.println(Login.username);
         this.getContentPane().setLayout(new GridBagLayout());
         rutasLeer = new Leer();
         rutasAdd = new Add();
         medico = new Medico(2,0,3,30); //MEDICO EN SESIOOON
         citas = new Citas [medico.cantidadDeCitasxDia(10, 30)];
-        
+        comparteInfo=true;//Esto deber[a ser buscado en la base de datos
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, new File("Sertig.otf"));
             font  = font.deriveFont(Font.BOLD, 11);
@@ -143,36 +149,81 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         setTitle("Citas");
         
         GridBagConstraints gbc = new GridBagConstraints();
-        
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 0.5;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.fill = GridBagConstraints.BOTH;
-        this.getContentPane().add(PanelCalendar, gbc);
-        gbc.weightx = 0.0;
-        gbc.weighty = 0.0;
-        
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        this.getContentPane().add(PanelCita, gbc);
-        
-        
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 2;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        this.getContentPane().add(PanelDetalle, gbc); 
-        
+        if(comparteInfo){
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 0.5;
+            gbc.weighty = 0.5;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            gbc.fill = GridBagConstraints.BOTH;
+            this.getContentPane().add(PanelCalendar, gbc);
+            gbc.weightx = 0.0;
+            gbc.weighty = 0.0;
+
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 0.5;
+            gbc.weighty = 1.0;
+            this.getContentPane().add(PanelCita, gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 0;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 2;
+            gbc.weightx = 0.50;
+            gbc.weighty = 1.0;
+            this.getContentPane().add(PanelPacientes, gbc);
+            
+            gbc.gridx = 1;
+            gbc.gridy = 0;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 2;
+            gbc.weightx = 0.80;
+            gbc.weighty = 1.0;
+            this.getContentPane().add(PanelDetalle, gbc);
+
+            gbc.gridx = 2;
+            gbc.gridy = 0;
+            gbc.gridwidth = 4;
+            gbc.gridheight = 2;
+            gbc.weightx = 2.0;
+            gbc.weighty = 1.0;
+            gbc.fill = GridBagConstraints.BOTH;
+            this.getContentPane().add(ScrollHistoria, gbc); 
+        }else {
+            ScrollHistoria.setVisible(false);
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 0.5;
+            gbc.weighty = 0.5;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            gbc.fill = GridBagConstraints.BOTH;
+            this.getContentPane().add(PanelCalendar, gbc);
+            gbc.weightx = 0.0;
+            gbc.weighty = 0.0;
+
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 0.5;
+            gbc.weighty = 1.0;
+            this.getContentPane().add(PanelCita, gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 0;
+            gbc.gridwidth = 2;
+            gbc.gridheight = 2;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+            this.getContentPane().add(PanelDetalle, gbc);
+        }
               
         
         ////////////////// PANEL DETALLES
@@ -216,6 +267,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         cambiarColorPanel(PanelCalendar,colorDelPapa);
         cambiarColorPanel(PanelCita,colorDelPapa);
         cambiarColorPanel(PanelDetalle,colorDelPapa);
+        cambiarColorPanel(panelHistoria,colorDelPapa);
+        cambiarColorPanel(PanelPacientes,colorDelPapa);
         
         
         //LABELS
@@ -482,6 +535,44 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         
         PanelDetalle.setVisible(true);
         
+        // Inicio componentes Panel de Pacientes //
+        
+        
+        
+        this.PanelPacientes.setLayout(new GridBagLayout());
+        this.paciente_nombreL = new JLabel("<HTML> Nombre &nbsp &nbsp </HTML>");
+        this.paciente_nombreR = new JLabel("Miguel Armando");
+        disenoLabel(paciente_nombreL);
+        disenoLabel(paciente_nombreR);
+        
+       constraints.gridx = 0;
+       constraints.gridy = 0;
+       constraints.gridwidth = 1;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       constraints.weighty = 1.0;
+       PanelPacientes.add (paciente_nombreL, constraints);
+       
+       constraints.gridx = 2;//Necesita estirarse
+       constraints.gridy = 1;
+       constraints.gridwidth = 2;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       constraints.weighty = 1.0;
+       PanelPacientes.add (paciente_nombreR, constraints);
+       
+      // this.PanelPacientes;
+       
+       
+       
+       this.PanelPacientes.setVisible(false);
+       
+        
+        // Fin componentes Panel de Pacientes //
+        
+        
+      //  this.PanelDetalle.setVisible(false);
+        
         //////////////////////ULTIMAS MOTIFICACIONES PRIMER INCREMENTO
         atrasB.setEnabled(false);
         buscarB.setEnabled(false);
@@ -587,7 +678,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         gbc.fill = GridBagConstraints.NONE;
         PanelCita.add(FechaLbl,gbc);
         //Aqui se busca esta fecha (jCalendar1.getDate()) en la base de datos y se traen las citas 
-        citasporfecha = rutasLeer.leer("http://localhost/API_Citas/public/Citas/porFecha/"+formato.format(jCalendar1.getDate()));
+        System.out.println("LA FECHA:  " + formato.format(jCalendar1.getDate()));
+        citasporfecha = rutasLeer.leer("http://localhost/API_Citas/public/Citas/porFecha/"+formato.format(jCalendar1.getDate())+"/"+Login.username);
         
             gbc.gridx = 0;
             gbc.gridwidth = 1;
@@ -656,6 +748,9 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             PanelCita.repaint();
     }
     
+    private void dibujarPaciente(){
+        
+    }
     
      private void dibujarPanelCita(Medico medico){
         min = medico.getMinutosDeAtencionxPaciente(); 
@@ -890,11 +985,16 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         PanelCalendar = new javax.swing.JPanel();
         jCalendar1 = new com.toedter.calendar.JCalendar();
         PanelCita = new javax.swing.JPanel();
         FechaLbl = new javax.swing.JLabel();
         PanelDetalle = new javax.swing.JPanel();
+        ScrollHistoria = new javax.swing.JScrollPane();
+        panelHistoria = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        PanelPacientes = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -903,6 +1003,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         jMenu4.setText("File");
         jMenuBar2.add(jMenu4);
@@ -910,9 +1012,11 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         jMenu5.setText("Edit");
         jMenuBar2.add(jMenu5);
 
+        jMenuItem5.setText("jMenuItem5");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 500));
-        setSize(new java.awt.Dimension(0, 0));
+        setPreferredSize(new java.awt.Dimension(1300, 600));
 
         PanelCalendar.setBorder(javax.swing.BorderFactory.createTitledBorder("Calendario"));
         PanelCalendar.setLayout(new java.awt.BorderLayout());
@@ -952,6 +1056,39 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             PanelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 200, Short.MAX_VALUE)
         );
+
+        panelHistoria.setBorder(javax.swing.BorderFactory.createTitledBorder("Historia"));
+
+        javax.swing.GroupLayout panelHistoriaLayout = new javax.swing.GroupLayout(panelHistoria);
+        panelHistoria.setLayout(panelHistoriaLayout);
+        panelHistoriaLayout.setHorizontalGroup(
+            panelHistoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 190, Short.MAX_VALUE)
+        );
+        panelHistoriaLayout.setVerticalGroup(
+            panelHistoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 234, Short.MAX_VALUE)
+        );
+
+        ScrollHistoria.setViewportView(panelHistoria);
+        panelHistoria.getAccessibleContext().setAccessibleName("Historial");
+        panelHistoria.getAccessibleContext().setAccessibleDescription("Historial");
+
+        PanelPacientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Pacientes"));
+
+        javax.swing.GroupLayout PanelPacientesLayout = new javax.swing.GroupLayout(PanelPacientes);
+        PanelPacientes.setLayout(PanelPacientesLayout);
+        PanelPacientesLayout.setHorizontalGroup(
+            PanelPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 199, Short.MAX_VALUE)
+        );
+        PanelPacientesLayout.setVerticalGroup(
+            PanelPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 173, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(PanelPacientes);
+        PanelPacientes.getAccessibleContext().setAccessibleName("Pacientes");
 
         jMenu1.setText("Citas");
 
@@ -995,6 +1132,22 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         });
         jMenu2.add(jMenuItem2);
 
+        jMenuItem6.setText("jMenuItem6");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setText("jMenuItem7");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -1008,22 +1161,33 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                 .addComponent(PanelCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66)
                 .addComponent(PanelCita, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(236, 236, 236)
-                .addComponent(PanelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(PanelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(ScrollHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(471, 471, 471))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(PanelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(106, 106, 106)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(PanelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(PanelCita, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(PanelCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PanelCita, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PanelCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(118, Short.MAX_VALUE))
+                        .addGap(141, 141, 141)
+                        .addComponent(ScrollHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -1058,6 +1222,16 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         Login login = new Login();
         login.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        this.PanelPacientes.setVisible(true);
+        this.PanelDetalle.setVisible(false);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+         this.PanelPacientes.setVisible(false);
+        this.PanelDetalle.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1110,6 +1284,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     private javax.swing.JPanel PanelCalendar;
     private javax.swing.JPanel PanelCita;
     private javax.swing.JPanel PanelDetalle;
+    private javax.swing.JPanel PanelPacientes;
+    private javax.swing.JScrollPane ScrollHistoria;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -1122,6 +1298,11 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JOptionPane jOptionPane1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelHistoria;
     // End of variables declaration//GEN-END:variables
 }

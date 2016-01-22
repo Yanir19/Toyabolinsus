@@ -20,6 +20,7 @@ import org.json.simple.parser.ParseException;
  */
 public class Login extends javax.swing.JFrame {
 
+    public static String username;
     /**
      * Creates new form Login
      */
@@ -49,6 +50,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña:");
 
+        UsuarioTxtF.setText("mboscan");
         UsuarioTxtF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsuarioTxtFActionPerformed(evt);
@@ -63,9 +65,17 @@ public class Login extends javax.swing.JFrame {
         });
 
         SalirBtn.setText("Salir");
+        SalirBtn.setPreferredSize(new java.awt.Dimension(71, 23));
         SalirBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SalirBtnActionPerformed(evt);
+            }
+        });
+
+        PassTxtF.setText("1234");
+        PassTxtF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PassTxtFActionPerformed(evt);
             }
         });
 
@@ -84,8 +94,8 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(PassTxtF, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(223, Short.MAX_VALUE)
-                .addComponent(SalirBtn)
+                .addContainerGap(205, Short.MAX_VALUE)
+                .addComponent(SalirBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(AceptarBtn)
                 .addContainerGap())
@@ -104,7 +114,7 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AceptarBtn)
-                    .addComponent(SalirBtn))
+                    .addComponent(SalirBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -125,6 +135,7 @@ public class Login extends javax.swing.JFrame {
             System.out.println(""+ password);
             Add post = new Add();
             if(post.add("http://localhost/API_Citas/public/login", Login)){
+                username = UsuarioTxtF.getText();
                 FrameCita cita = new FrameCita();
                 cita.setVisible(true);
                 cita.setLocationRelativeTo(null);
@@ -141,6 +152,10 @@ public class Login extends javax.swing.JFrame {
     private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed
         System.exit(0);
     }//GEN-LAST:event_SalirBtnActionPerformed
+
+    private void PassTxtFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassTxtFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PassTxtFActionPerformed
 
     /**
      * @param args the command line arguments
