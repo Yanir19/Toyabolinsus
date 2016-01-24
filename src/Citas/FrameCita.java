@@ -127,6 +127,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     int total;   
     boolean comparteInfo;
     SimpleDateFormat formato;
+    boolean agregarPaciente;//Si esta en verdadero entonces se debe agregar el paciente, sino no.
     ////////////// ELEMENTOS DEL PANEL DETALLE
     
     
@@ -141,6 +142,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         medico = new Medico(2,0,3,30); //MEDICO EN SESIOOON
         citas = new Citas [medico.cantidadDeCitasxDia(10, 30)];
         comparteInfo=true;//Esto deber[a ser buscado en la base de datos
+        agregarPaciente = true;
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, new File("Sertig.otf"));
             font  = font.deriveFont(Font.BOLD, 11);
@@ -781,7 +783,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         PanelCita.setLayout(new GridBagLayout());
         FechaLbl.setText(formato.format(jCalendar1.getDate()));
          dibujarPanelCita(medico);//Dibuja la "libreta" de las citas
-               
+        agregarPaciente = true; //Por defecto si se debe agregar el paciente
         
         font=font  = font.deriveFont(Font.BOLD, 17);
         disenoLabel(FechaLbl);
@@ -915,6 +917,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         if (e.getSource()==agregarB) {
             try {
                 
+                
                 //Cita
                 JSONObject cita=new JSONObject();
                 cita.put("fecha",fechaJ.getText());
@@ -927,16 +930,19 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                 System.out.print(cita);
                 
                 //Paciente
-                JSONObject paciente=new JSONObject();
-                paciente.put("cedula",cedulaJ.getText());
-                paciente.put("nombre",nombreJ.getText());
-                paciente.put("apellido",apellidoJ.getText());
-                paciente.put("direccion",direccionJ.getText());
-                paciente.put("correo",correoJ.getText());
-                paciente.put("tlfncasa",telefonoCasaJ.getText());
-                paciente.put("tlfncelular",telefonoCelularJ.getText());
-                System.out.print(paciente);
-                //rutasAdd.add("http://localhost/API_Citas/public/Pacientes/insertarPaciente", paciente);
+                if(agregarPaciente){
+                    JSONObject paciente=new JSONObject();
+                    paciente.put("cedula",cedulaJ.getText());
+                    paciente.put("nombre",nombreJ.getText());
+                    paciente.put("apellido",apellidoJ.getText());
+                    paciente.put("direccion",direccionJ.getText());
+                    paciente.put("correo",correoJ.getText());
+                    paciente.put("tlfncasa",telefonoCasaJ.getText());
+                    paciente.put("tlfncelular",telefonoCelularJ.getText());
+                    System.out.print(paciente);
+                    rutasAdd.add("http://localhost/API_Citas/public/Pacientes/create", paciente);
+                }
+                
                 rutasAdd.add("http://localhost/API_Citas/public/Citas/insertarCita", cita);
                 
                 setCitas();
@@ -975,20 +981,45 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             
         }
         if (e.getSource()==buscarB) {
-            
-            
-            
-             String[] opciones = {"Aceptar" };
-            int opcion = JOptionPane.showOptionDialog(
-                               null                             //componente
-                             , "Cedula no pertenece a ningun paciente registrado"            // Mensaje
-                             , "Paciente no encontrado"         // Titulo en la barra del cuadro
-                             , JOptionPane.DEFAULT_OPTION       // Tipo de opciones
-                             , JOptionPane.WARNING_MESSAGE  // Tipo de mensaje (icono)
-                             , null                             // Icono (ninguno)
-                             , opciones                         // Opciones personalizadas
-                             , null                             // Opcion por defecto
-                           );
+            JSONArray aux = new JSONArray();
+            JSONObject paciente = new JSONObject();
+            try {
+                aux = (rutasLeer.leer("http://localhost/API_Citas/public/Pacientes/porCedula/"+cedulaJ.getText()));
+            } catch (IOException ex) {
+                Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JSONException ex) {
+                Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(aux.toString());
+            if(aux.toString().equals("[]")){//Si no se encontro el paciente en la BD se setea agregarPAciente para que se agregue a la BD
+                agregarPaciente = true;
+                String[] opciones = {"Aceptar"};
+                int opcion = JOptionPane.showOptionDialog(
+                        null //componente
+                        , "Cedula no pertenece a ningun paciente registrado" // Mensaje
+                        , "Paciente no encontrado" // Titulo en la barra del cuadro
+                        , JOptionPane.DEFAULT_OPTION // Tipo de opciones
+                        , JOptionPane.WARNING_MESSAGE // Tipo de mensaje (icono)
+                        , null // Icono (ninguno)
+                        , opciones // Opciones personalizadas
+                        , null // Opcion por defecto
+                );
+            }else{
+                try {
+                    agregarPaciente=false;//Si se consigue, entonces no se debe a;adir.
+                    paciente =(JSONObject) aux.get(0);
+                    cedulaJ.setText(paciente.getString("cedula"));
+                    nombreJ.setText(paciente.getString("nombre"));
+                    apellidoJ.setText(paciente.getString("apellido"));
+                    direccionJ.setText(paciente.getString("direccion"));
+                    correoJ.setText(paciente.getString("correo"));
+                    telefonoCasaJ.setText(paciente.getString("tlfncasa"));
+                    telefonoCelularJ.setText(paciente.getString("tlfncelular"));
+                } catch (JSONException ex) {
+                    Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
             
         }
         
