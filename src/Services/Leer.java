@@ -1,19 +1,14 @@
 package Services;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -42,9 +37,12 @@ public JSONArray leer(String ruta) throws ClientProtocolException, IOException, 
     HttpResponse response = client.execute(get);
     HttpEntity entity= response.getEntity();
     String content = EntityUtils.toString(entity);
-    System.out.println("ESTE ES EL JSON en LEER " + content);
+    
+    System.out.println("ESTE ES EL JSON en LEER " +ruta + "\nResponse: "+content);
   
    JSONArray json = new JSONArray(content);
+   
+    System.out.println("ESTE ES EL JSON en LEER " +ruta + "\nResponse: "+json);
    
    
         return json;
