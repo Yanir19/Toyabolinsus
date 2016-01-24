@@ -39,6 +39,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.simple.parser.ParseException;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -92,6 +94,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     JTextField correoJ;
     
     
+    
     //JTextArea - para ingreso o impresion de motivos
     JTextArea motivosTA;
     
@@ -114,8 +117,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     //Para los minutos y horas
     int min;
     int hora;
-    
-    
+    int total;   
+    SimpleDateFormat formato;
     ////////////// ELEMENTOS DEL PANEL DETALLE
     
     
@@ -125,15 +128,12 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         this.getContentPane().setLayout(new GridBagLayout());
         rutasLeer = new Leer();
         rutasAdd = new Add();
+        formato = new SimpleDateFormat("yyyy-MM-dd");
         medico = new Medico(2,0,3,30); //MEDICO EN SESIOOON
         citas = new Citas [medico.cantidadDeCitasxDia(10, 30)];
         
-        try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File("Sertig.otf"));
-            font  = font.deriveFont(Font.BOLD, 11);
-        } catch (FontFormatException ex) {
-            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        font = new Font("Courier", Font.BOLD, 36);
+        font  = font.deriveFont(Font.BOLD, 11);
         
         setTitle("Citas");
         
@@ -266,33 +266,31 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
 */
        //Añadir componentes al PanelDetalle
        GridBagConstraints constraints = new GridBagConstraints();
-       
        //Caracteristicas globales del grid
        constraints.fill = GridBagConstraints.BOTH;
        constraints.weighty = 1.0;
        constraints.insets.set(5, 0, 5,10 );
        //Fin Caracteristicas Globales del grid
        
-       constraints.gridx = 0;
-       constraints.gridy = 0; 
-       constraints.gridwidth = 1;
-       constraints.gridheight = 1;
-       PanelDetalle.add (fechaL, constraints);
        
        
-       constraints.gridx = 1; //Necesita estirarse
+       constraints.gridx = 1;
        constraints.gridy = 0;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
-       constraints.weightx = 1.0;
-       PanelDetalle.add (fechaJ, constraints);
-       constraints.weightx = 0.0;
+       PanelDetalle.add(new JSeparator(SwingConstants.HORIZONTAL),constraints);
+       constraints.gridx = 1;
+       constraints.gridy = 8;
+       constraints.gridwidth = 1;
+       constraints.gridheight = 1;
+       PanelDetalle.add(new JSeparator(SwingConstants.HORIZONTAL),constraints);
+       
        
        constraints.gridx = 0;
        constraints.gridy = 1; 
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
-       PanelDetalle.add (horaL, constraints);
+       PanelDetalle.add (cedulaL, constraints);
        
        
        constraints.gridx = 1; //Necesita estirarse
@@ -300,24 +298,25 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        constraints.weightx = 1.0;
-       PanelDetalle.add (horaJ, constraints);
+       PanelDetalle.add (cedulaJ, constraints);
        constraints.weightx = 0.0;
        
-       
        constraints.gridx = 0;
-       constraints.gridy = 2;
+       constraints.gridy = 2; 
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        PanelDetalle.add (nombreL, constraints);
        
-       constraints.gridx = 1;//Necesita estirarse
+       
+       constraints.gridx = 1; //Necesita estirarse
        constraints.gridy = 2;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        constraints.weightx = 1.0;
        PanelDetalle.add (nombreJ, constraints);
        constraints.weightx = 0.0;
-         
+       
+       
        constraints.gridx = 0;
        constraints.gridy = 3;
        constraints.gridwidth = 1;
@@ -331,29 +330,15 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
        constraints.weightx = 1.0;
        PanelDetalle.add (apellidoJ, constraints);
        constraints.weightx = 0.0;
-       
+         
        constraints.gridx = 0;
        constraints.gridy = 4;
-       constraints.gridwidth = 1;
-       constraints.gridheight = 1;
-       PanelDetalle.add (cedulaL, constraints);
-       
-       constraints.gridx = 1;//Necesita estirarse
-       constraints.gridy = 4;
-       constraints.gridwidth = 1;
-       constraints.gridheight = 1;
-       constraints.weightx = 1.0;
-       PanelDetalle.add (cedulaJ, constraints);
-       constraints.weightx = 0.0;
-       
-       constraints.gridx = 0;
-       constraints.gridy = 5;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        PanelDetalle.add (direccionL, constraints);
        
        constraints.gridx = 1;//Necesita estirarse
-       constraints.gridy = 5;
+       constraints.gridy = 4;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        constraints.weightx = 1.0;
@@ -361,62 +346,94 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
        constraints.weightx = 0.0;
        
        constraints.gridx = 0;
-       constraints.gridy = 6;
-       constraints.gridwidth = 1;
-       constraints.gridheight = 2;
-       constraints.weighty = 1.0;
-       PanelDetalle.add (motivosL, constraints);
-       
-       constraints.gridx = 1;//Necesita estirarse
-       constraints.gridy = 6;
-       constraints.gridwidth = 1;
-       constraints.gridheight = 2;
-       constraints.weightx = 1.0;
-       constraints.weighty = 1.0;
-       PanelDetalle.add (motivosTA, constraints);
-       constraints.weightx = 0.0;
-       
-       
-       constraints.gridx = 0;
-       constraints.gridy = 8;
+       constraints.gridy = 5;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        PanelDetalle.add (telefonoCasaL, constraints);
        
        constraints.gridx = 1;//Necesita estirarse
-       constraints.gridy = 8;
+       constraints.gridy = 5;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        constraints.weightx = 1.0;
        PanelDetalle.add (telefonoCasaJ, constraints);
        constraints.weightx = 0.0;
-        
-              constraints.gridx = 0;
-       constraints.gridy = 9;
+       
+       constraints.gridx = 0;
+       constraints.gridy = 6;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        PanelDetalle.add (telefonoCelularL, constraints);
        
        constraints.gridx = 1;//Necesita estirarse
-       constraints.gridy = 9;
+       constraints.gridy = 6;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        constraints.weightx = 1.0;
        PanelDetalle.add (telefonoCelularJ, constraints);
        constraints.weightx = 0.0;
        
+       constraints.gridx = 0;
+       constraints.gridy = 7;
+       constraints.gridwidth = 1;
+       constraints.gridheight = 1;
+       constraints.weighty = 1.0;
+       PanelDetalle.add (correoL, constraints);
+       
+       constraints.gridx = 1;//Necesita estirarse
+       constraints.gridy = 7;
+       constraints.gridwidth = 1;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       constraints.weighty = 1.0;
+       PanelDetalle.add (correoJ, constraints);
+       constraints.weightx = 0.0;
+       
+       
+       
+       
+       
+       constraints.gridx = 0;
+       constraints.gridy = 9;
+       constraints.gridwidth = 1;
+       constraints.gridheight = 1;
+       PanelDetalle.add (fechaL, constraints);
+       
+       constraints.gridx = 1;//Necesita estirarse
+       constraints.gridy = 9;
+       constraints.gridwidth = 1;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       PanelDetalle.add (fechaJ, constraints);
+       constraints.weightx = 0.0;
+        
               constraints.gridx = 0;
        constraints.gridy = 10;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
-       PanelDetalle.add (correoL, constraints);
+       PanelDetalle.add (horaL, constraints);
        
        constraints.gridx = 1;//Necesita estirarse
        constraints.gridy = 10;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        constraints.weightx = 1.0;
-       PanelDetalle.add (correoJ, constraints);
+       PanelDetalle.add (horaJ, constraints);
+       constraints.weightx = 0.0;
+       
+       constraints.gridx = 0;
+       constraints.gridy = 11;
+       constraints.gridwidth = 1;
+       constraints.gridheight = 2;
+       PanelDetalle.add (motivosL, constraints);
+       
+       constraints.gridx = 1;//Necesita estirarse
+       constraints.gridy = 11;
+       constraints.gridwidth = 1;
+       constraints.gridheight = 2;
+       constraints.weightx = 1.0;
+       constraints.weighty = 1.0;
+       PanelDetalle.add (motivosTA, constraints);
        constraints.weightx = 0.0;
        
        //PANEL DE LOS BOTONES
@@ -425,7 +442,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
        
        
        constraints.gridx = 1;//Necesita estirarse
-       constraints.gridy = 11;
+       constraints.gridy = 13;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        constraints.weightx = 0.0;
@@ -440,9 +457,9 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
        
        //Boton Buscar
        constraints.anchor=GridBagConstraints.NORTH;
-       constraints.insets.set(10, 0, 0,0 );
+       constraints.insets.set(0, 0, 0,0 );
        constraints.gridx = 2;//Necesita estirarse
-       constraints.gridy = 4;
+       constraints.gridy = 1;
        constraints.gridwidth = 1;
        constraints.gridheight = 0;
        constraints.weightx = 0.0;
@@ -461,7 +478,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
        
        constraints.insets.set(30, 0, 10,10 );
        constraints.gridx = 2;//Necesita estirarse
-       constraints.gridy = 11;
+       constraints.gridy = 12;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        constraints.weightx = 0.0;
@@ -552,7 +569,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
    }
     
     public void setCitas() throws IOException, ClientProtocolException, JSONException, ParseException, java.text.ParseException{
-        
+        total=0;
         JSONArray citasporfecha;
         JSONArray pacienteporid;
         JSONObject paciente;
@@ -564,7 +581,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         PanelCita.revalidate();
         PanelCita.repaint();
         PanelCita.setLayout(new GridBagLayout());
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         FechaLbl.setText(formato.format(jCalendar1.getDate()));
          dibujarPanelCita(medico);//Dibuja la "libreta" de las citas
                
@@ -591,7 +607,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             gbc.weighty = 1.0;
             gbc.anchor = GridBagConstraints.NORTHWEST;
             gbc.fill = GridBagConstraints.BOTH;
-            int total = 0;   
             for (int i = 0;i<citasporfecha.length();i++) {  
                 JSONObject obj = (JSONObject)citasporfecha.get(i);
                 System.out.println("ENTRE EN EL FOR " + i + ": "+ obj.toString());
@@ -601,35 +616,19 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                     if(citas[j].getHora().equals(obj.get("hora"))){
                         pacienteporid = rutasLeer.leer("http://localhost/API_Citas/public/Pacientes/porId/"+obj.get("paciente"));
                         paciente = (JSONObject) pacienteporid.get(0);
+                        citas[j].Paciente=obj.get("paciente").toString();
                         citas[j].setText(citas[j].getText()+" "+obj.get("paciente")+ " "+ paciente.get("cedula"));
                         total++;
+                         //if(citas [i].getHora() == citasporfecha.get("id"))
+                        System.out.println("voy a agregar las citas");
+                        //citas [i] = new Citas (i);  
+                        citas[j].setBorder(BorderFactory.createLineBorder(Color.black));
+                        citas[j].setOpaque(true);
+
+                    
                     }
                 }
-                //if(citas [i].getHora() == citasporfecha.get("id"))
-                System.out.println("voy a agregar las citas");
-                //citas [i] = new Citas (i);  
-                citas [i].setBorder(BorderFactory.createLineBorder(Color.black));
-                citas [i].setOpaque(true); 
-                
-                citas [i].addMouseListener(new MouseListener() {              
-                    @Override
-                    public void mousePressed(MouseEvent e) {}
-                    @Override
-                    public void mouseReleased(MouseEvent e) {}
-                    @Override
-                    public void mouseEntered(MouseEvent e) {}
-                    @Override
-                    public void mouseExited(MouseEvent e) {}
-
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        
-                        Citas seleccion = new Citas();
-                        seleccion = (Citas) e.getComponent();
-                        System.out.println("Label  clickeado" +  seleccion.getText() );
-                        acciones(seleccion);
-                    }
-                });
+               
                 
                 
                 
@@ -638,12 +637,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
 
 
             }  
-            if(total==medico.getCitasPorDia()){
-                JSONObject fecha = new org.json.JSONObject();
-                fecha.put("diasOcupados", formato.format(jCalendar1.getDate()));
-                //rutasAdd.add("http://localhost/API_Citas/public/Diasocupados/insertarfecha", fecha);
-                jCalendar1.getDayChooser().addDateEvaluator(new DJFechasEspInv());//Pinta las Fechas ocupadas en rojo 
-            }
+
             jCalendar1.setDate(jCalendar1.getDate());
             jCalendar1.revalidate();
             jCalendar1.repaint();
@@ -684,6 +678,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             citas [i]=new Citas (("" +String.format("%02d",horaInicio)+":" + String.format("%02d",minInicio)  + " - " + String.format("%02d",horaActual) + ":" + String.format("%02d",minActual)),("" +String.format("%02d",horaInicio)+":" + String.format("%02d",minInicio) + ":" +  String.format("%02d",0)));
             citas [i].setBorder(BorderFactory.createLineBorder(Color.black));
             citas [i].setOpaque(true);
+            citas[i].Paciente=null;
+            citas[i].fecha=formato.format(jCalendar1.getDate());
             citas [i].addMouseListener(new MouseListener() {              
                     @Override
                     public void mousePressed(MouseEvent e) {}
@@ -696,9 +692,10 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
 
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        fechaJ.setText(jCalendar1.getDate().toString());
-                        fechaJ.setEnabled(true);
-                        acciones(null);
+                        Citas seleccion = new Citas();
+                                seleccion = (Citas) e.getComponent();
+                                System.out.println("Label  clickeado sin cita" + seleccion.getText());
+                                acciones(seleccion);
                     }
                 });
             PanelCita.add (citas[i] ,gbc);
@@ -742,6 +739,13 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                 rutasAdd.add("http://localhost/API_Citas/public/Citas/insertarCita", cita);
                 
                 setCitas();
+                if(total==medico.getCitasPorDia()){
+                JSONObject fecha = new org.json.JSONObject();
+                fecha.put("diasOcupados", formato.format(jCalendar1.getDate()));
+                rutasAdd.add("http://localhost/API_Citas/public/Diasocupados/insertarfecha", fecha);
+                jCalendar1.getDayChooser().addDateEvaluator(new DJFechasEspInv());//Pinta las Fechas ocupadas en rojo 
+                jCalendar1.setDate(jCalendar1.getDate());
+            }
             } catch (IOException ex) {
                 Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
@@ -814,7 +818,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
      private void acciones(Citas cita){
         
         BorrarTextFields();
-        if(cita==null){
+        if(cita.Paciente==null){
             atrasB.setEnabled(true);
             buscarB.setEnabled(true);
             modificarB.setEnabled(false);
@@ -830,6 +834,10 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             telefonoCelularJ.setEditable(true);
             correoJ.setEditable(true); 
             motivosTA.setEditable(true);
+            nombreJ.setText(cita.Paciente);
+            cedulaJ.setText(cita.Cedula);
+            fechaJ.setText(cita.fecha);
+            horaJ.setText(cita.Hora);
             
         }else{
             atrasB.setEnabled(false);
@@ -837,7 +845,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             modificarB.setEnabled(false);
             agregarB.setEnabled(false);
             eliminarB.setEnabled(false);
-            fechaJ.setText(cita.Dia);
+            fechaJ.setText(cita.fecha);
             horaJ.setText(cita.Hora);
             nombreJ.setText(cita.Paciente);
             cedulaJ.setText(cita.Cedula);
