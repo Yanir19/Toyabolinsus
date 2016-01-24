@@ -27,6 +27,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import medical.Medico;
 import Services.Leer;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
@@ -116,6 +117,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     //Medico en sesion
     Medico medico;
     Citas citas[];
+    Pacientes pacientes[];
     //Para los minutos y horas
     int min;
     int hora;
@@ -544,24 +546,124 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         this.paciente_nombreR = new JLabel("Miguel Armando");
         disenoLabel(paciente_nombreL);
         disenoLabel(paciente_nombreR);
+        JPanel p[] = new JPanel[10];
+        pacientes = new Pacientes[5];
+                
+        p[0] = new JPanel();
+        p[1] = new JPanel();
+        p[2] = new JPanel();
+        p[3] = new JPanel();
+        pacientes[0] = new Pacientes();
+        pacientes[1] = new Pacientes();
+        pacientes[2] = new Pacientes();
+        pacientes[3] = new Pacientes();
+        pacientes[4] = new Pacientes();
         
-       constraints.gridx = 0;
+       cambiarColorPanel(p[0],colorDelPapa);
+       cambiarColorPanel(p[1],colorDelPapa);
+       cambiarColorPanel(p[2],colorDelPapa);
+       cambiarColorPanel(p[3],colorDelPapa);
+       cambiarColorPanel(pacientes[0],colorDelPapa);
+       cambiarColorPanel(pacientes[1],colorDelPapa);
+       cambiarColorPanel(pacientes[2],colorDelPapa);
+       cambiarColorPanel(pacientes[3],colorDelPapa);
+       cambiarColorPanel(pacientes[4],colorDelPapa);
+       
+       JButton b = new JButton();
+       b.setPreferredSize(new Dimension(100,20));
+       
+       constraints.gridx = 0;//Necesita estirarse
        constraints.gridy = 0;
+       constraints.gridwidth = 4;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       constraints.weighty = 1.0;
+       constraints.anchor = GridBagConstraints.NORTHWEST;
+       PanelPacientes.add (paciente_nombreR, constraints);
+       
+       constraints.gridx = 0;//Necesita estirarse
+       constraints.gridy = 1;
+       constraints.gridwidth = 4;
+       constraints.gridheight = 8;
+       constraints.weightx = 1.0;
+       constraints.weighty = 1.0;
+       constraints.anchor = GridBagConstraints.NORTHWEST;
+       PanelPacientes.add (p[3], constraints);
+       
+       constraints.gridx = 0;//Necesita estirarse
+       constraints.gridy = 9;
        constraints.gridwidth = 1;
        constraints.gridheight = 1;
        constraints.weightx = 1.0;
        constraints.weighty = 1.0;
-       PanelPacientes.add (paciente_nombreL, constraints);
-       
-       constraints.gridx = 2;//Necesita estirarse
-       constraints.gridy = 1;
-       constraints.gridwidth = 2;
-       constraints.gridheight = 1;
-       constraints.weightx = 1.0;
-       constraints.weighty = 1.0;
-       PanelPacientes.add (paciente_nombreR, constraints);
+       constraints.anchor = GridBagConstraints.CENTER;
+       PanelPacientes.add (b, constraints);
+           
        
       // this.PanelPacientes;
+       
+//       this.PanelPacientesScroll.setLayout(new GridBagLayout());
+       
+       p[3].setLayout(new GridBagLayout());
+       this.PanelPacientesScroll.setPreferredSize(new Dimension(420,350));
+       
+       constraints.gridx = 0;//Necesita estirarse
+       constraints.gridy = 0;
+       constraints.gridwidth = 4;
+       constraints.gridheight = 8;
+       constraints.weightx = 1.0;
+       constraints.weighty = 1.0;
+       constraints.anchor = GridBagConstraints.NORTHWEST;
+       p[3].add (this.PanelPacientesScroll, constraints);
+       
+       this.PanelPacientesScroll.setViewportView(p[2]);
+       
+       p[2].setLayout(new GridBagLayout());
+       
+       constraints.gridx = 0;//Necesita estirarse
+       constraints.gridy = 0;
+       constraints.gridwidth = 4;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       constraints.weighty = 0.2;
+       constraints.anchor = GridBagConstraints.NORTHWEST;
+       p[2].add (pacientes[0], constraints);
+       
+       constraints.gridx = 0;//Necesita estirarse
+       constraints.gridy = 1;
+       constraints.gridwidth = 4;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       constraints.weighty = 0.2;
+       constraints.anchor = GridBagConstraints.NORTHWEST;
+       p[2].add (pacientes[1], constraints);
+       
+       constraints.gridx = 0;//Necesita estirarse
+       constraints.gridy = 2;
+       constraints.gridwidth = 4;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       constraints.weighty = 0.2;
+       constraints.anchor = GridBagConstraints.NORTHWEST;
+       p[2].add (pacientes[2], constraints);
+       
+       constraints.gridx = 0;//Necesita estirarse
+       constraints.gridy = 3;
+       constraints.gridwidth = 4;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       constraints.weighty = 0.2;
+       constraints.anchor = GridBagConstraints.NORTHWEST;
+       p[2].add (pacientes[3], constraints);
+       
+       constraints.gridx = 0;//Necesita estirarse
+       constraints.gridy = 4;
+       constraints.gridwidth = 4;
+       constraints.gridheight = 1;
+       constraints.weightx = 1.0;
+       constraints.weighty = 0.2;
+       constraints.anchor = GridBagConstraints.NORTHWEST;
+       p[2].add (pacientes[4], constraints);
        
        
        
@@ -749,7 +851,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     }
     
     private void dibujarPaciente(){
-        
     }
     
      private void dibujarPanelCita(Medico medico){
@@ -993,8 +1094,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         PanelDetalle = new javax.swing.JPanel();
         ScrollHistoria = new javax.swing.JScrollPane();
         panelHistoria = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         PanelPacientes = new javax.swing.JPanel();
+        PanelPacientesScroll = new javax.swing.JScrollPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -1080,15 +1181,18 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         PanelPacientes.setLayout(PanelPacientesLayout);
         PanelPacientesLayout.setHorizontalGroup(
             PanelPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 199, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPacientesLayout.createSequentialGroup()
+                .addContainerGap(57, Short.MAX_VALUE)
+                .addComponent(PanelPacientesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
         PanelPacientesLayout.setVerticalGroup(
             PanelPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 173, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPacientesLayout.createSequentialGroup()
+                .addContainerGap(39, Short.MAX_VALUE)
+                .addComponent(PanelPacientesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
-
-        jScrollPane1.setViewportView(PanelPacientes);
-        PanelPacientes.getAccessibleContext().setAccessibleName("Pacientes");
 
         jMenu1.setText("Citas");
 
@@ -1161,15 +1265,13 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                 .addComponent(PanelCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66)
                 .addComponent(PanelCita, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(PanelPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(PanelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ScrollHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(471, 471, 471))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1185,10 +1287,14 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                     .addGroup(layout.createSequentialGroup()
                         .addGap(141, 141, 141)
                         .addComponent(ScrollHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(197, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(PanelPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(97, 97, 97))
         );
+
+        PanelPacientes.getAccessibleContext().setAccessibleName("Pacientes");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1285,6 +1391,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     private javax.swing.JPanel PanelCita;
     private javax.swing.JPanel PanelDetalle;
     private javax.swing.JPanel PanelPacientes;
+    private javax.swing.JScrollPane PanelPacientesScroll;
     private javax.swing.JScrollPane ScrollHistoria;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JMenu jMenu1;
@@ -1302,7 +1409,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JOptionPane jOptionPane1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelHistoria;
     // End of variables declaration//GEN-END:variables
 }
