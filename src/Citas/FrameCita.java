@@ -203,6 +203,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             gbc.fill = GridBagConstraints.BOTH;
             this.getContentPane().add(panelHistoria, gbc); 
         }else {
+            
             panelHistoria.setVisible(false);
             gbc.gridx = 0;
             gbc.gridy = 0;
