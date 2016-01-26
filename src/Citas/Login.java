@@ -50,7 +50,8 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña:");
 
-        UsuarioTxtF.setText("lino");
+        UsuarioTxtF.setText("mboscan");
+        UsuarioTxtF.setToolTipText("");
         UsuarioTxtF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsuarioTxtFActionPerformed(evt);

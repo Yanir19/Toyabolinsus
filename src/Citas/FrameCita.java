@@ -109,8 +109,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     JButton buscarB;
     
     // Elementos Panel Pacientes
-    JLabel paciente_nombreL;
-    JLabel paciente_nombreR;
+    JLabel paciente_mensaje;
+    JLabel paciente_titulo;
     
     
     JScrollPane scrollPanelCita; //Scroll del panel Cita
@@ -130,6 +130,12 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     boolean agregarPaciente;//Si esta en verdadero entonces se debe agregar el paciente, sino no.
     int idPaciente;
     ////////////// ELEMENTOS DEL PANEL DETALLE
+    
+    
+    
+    public static String cedula;
+    public static String nombre;
+    public static String apellido;
     
     
     public FrameCita() throws ClientProtocolException, IOException, JSONException, ParseException, java.text.ParseException {
@@ -198,9 +204,10 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             gbc.weightx = 2.0;
             gbc.weighty = 1.0;
             gbc.fill = GridBagConstraints.BOTH;
-            this.getContentPane().add(ScrollHistoria, gbc); 
+            this.getContentPane().add(panelHistoria, gbc); 
         }else {
-            ScrollHistoria.setVisible(false);
+            
+            panelHistoria.setVisible(false);
             gbc.gridx = 0;
             gbc.gridy = 0;
             gbc.gridwidth = 1;
@@ -562,32 +569,19 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         
         
         this.PanelPacientes.setLayout(new GridBagLayout());
-        this.paciente_nombreL = new JLabel("<HTML> Nombre &nbsp &nbsp </HTML>");
-        this.paciente_nombreR = new JLabel("Miguel Armando");
-        disenoLabel(paciente_nombreL);
-        disenoLabel(paciente_nombreR);
+        this.paciente_titulo = new JLabel("<HTML> PACIENTES DEL MEDICO "+Login.username.toUpperCase()+"</HTML>");
+        disenoLabel(paciente_titulo);
         JPanel p[] = new JPanel[10];
-        pacientes = new Pacientes[5];
                 
         p[0] = new JPanel();
         p[1] = new JPanel();
         p[2] = new JPanel();
         p[3] = new JPanel();
-        pacientes[0] = new Pacientes();
-        pacientes[1] = new Pacientes();
-        pacientes[2] = new Pacientes();
-        pacientes[3] = new Pacientes();
-        pacientes[4] = new Pacientes();
         
        cambiarColorPanel(p[0],colorDelPapa);
        cambiarColorPanel(p[1],colorDelPapa);
        cambiarColorPanel(p[2],colorDelPapa);
        cambiarColorPanel(p[3],colorDelPapa);
-       cambiarColorPanel(pacientes[0],colorDelPapa);
-       cambiarColorPanel(pacientes[1],colorDelPapa);
-       cambiarColorPanel(pacientes[2],colorDelPapa);
-       cambiarColorPanel(pacientes[3],colorDelPapa);
-       cambiarColorPanel(pacientes[4],colorDelPapa);
        
        JButton b = new JButton();
        b.setPreferredSize(new Dimension(100,20));
@@ -599,7 +593,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
        constraints.weightx = 1.0;
        constraints.weighty = 1.0;
        constraints.anchor = GridBagConstraints.NORTHWEST;
-       PanelPacientes.add (paciente_nombreR, constraints);
+       PanelPacientes.add (paciente_titulo, constraints);
        
        constraints.gridx = 0;//Necesita estirarse
        constraints.gridy = 1;
@@ -625,7 +619,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
 //       this.PanelPacientesScroll.setLayout(new GridBagLayout());
        
        p[3].setLayout(new GridBagLayout());
-       this.PanelPacientesScroll.setPreferredSize(new Dimension(420,350));
+       this.PanelPacientesScroll.setPreferredSize(new Dimension(420,300));
        
        constraints.gridx = 0;//Necesita estirarse
        constraints.gridy = 0;
@@ -639,51 +633,61 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
        this.PanelPacientesScroll.setViewportView(p[2]);
        
        p[2].setLayout(new GridBagLayout());
+       JSONArray pacientesMedico = new JSONArray();
+       JSONObject temp = new JSONObject();
+       pacientesMedico = rutasLeer.leer("http://localhost/API_Citas/public/Medicos/get_CPacientes/"+Login.username);
+       pacientes = new Pacientes[pacientesMedico.length()];
        
-       constraints.gridx = 0;//Necesita estirarse
-       constraints.gridy = 0;
-       constraints.gridwidth = 4;
-       constraints.gridheight = 1;
-       constraints.weightx = 1.0;
-       constraints.weighty = 0.2;
-       constraints.anchor = GridBagConstraints.NORTHWEST;
-       p[2].add (pacientes[0], constraints);
+        int idPaciente;
+        String CedulaPaciente;
+        String NombrePaciente;
+        String ApellidoPaciente;
+        String DireccionPaciente;
+        String CorreoPaciente;
+        String TlfCasaPaciente;
+        String TlfCelularPaciente;
+        
+        
+            this.paciente_mensaje = new JLabel("<HTML> NO HA ATENDIDO A NINGUN PACIENTE &nbsp &nbsp </HTML>");
+        disenoLabel(paciente_mensaje);
+      
+        if(pacientesMedico.toString().equals("[]")){
+            constraints.gridx = 0;//Necesita estirarse
+            constraints.gridy = 3;
+            constraints.gridwidth = 1;
+            constraints.gridheight = 1;
+            constraints.weightx = 1.0;
+            constraints.weighty = 1.0;
+            constraints.anchor = GridBagConstraints.CENTER;
+            p[2].add (paciente_mensaje, constraints);
+        }else{
+            for (int i = 0;i<pacientesMedico.length();i++){
+                 cambiarColorPanel(pacientes[i],colorDelPapa);
+                temp = (JSONObject)pacientesMedico.get(i);
+
+                idPaciente = temp.getInt("id");
+                CedulaPaciente = temp.getString("cedula");
+                NombrePaciente = temp.getString("nombre");
+                ApellidoPaciente = temp.getString("apellido");
+                DireccionPaciente = temp.getString("direccion");
+                CorreoPaciente = temp.getString("correo");
+                TlfCasaPaciente = temp.getString("tlfncasa");
+                TlfCelularPaciente = temp.getString("tlfncelular");
+
+                pacientes[i] = new Pacientes(idPaciente, CedulaPaciente, NombrePaciente, ApellidoPaciente, DireccionPaciente, CorreoPaciente, TlfCasaPaciente, TlfCelularPaciente);
+
+                 constraints.gridx = 0;//Necesita estirarse
+                 constraints.gridy = i;
+                 constraints.gridwidth = 4;
+                 constraints.gridheight = 1;
+                 constraints.weightx = 1.0;
+                 constraints.weighty = 0.2;
+                 constraints.anchor = GridBagConstraints.NORTHWEST;
+                 p[2].add (pacientes[i], constraints);
+            }
+        }
        
-       constraints.gridx = 0;//Necesita estirarse
-       constraints.gridy = 1;
-       constraints.gridwidth = 4;
-       constraints.gridheight = 1;
-       constraints.weightx = 1.0;
-       constraints.weighty = 0.2;
-       constraints.anchor = GridBagConstraints.NORTHWEST;
-       p[2].add (pacientes[1], constraints);
        
-       constraints.gridx = 0;//Necesita estirarse
-       constraints.gridy = 2;
-       constraints.gridwidth = 4;
-       constraints.gridheight = 1;
-       constraints.weightx = 1.0;
-       constraints.weighty = 0.2;
-       constraints.anchor = GridBagConstraints.NORTHWEST;
-       p[2].add (pacientes[2], constraints);
-       
-       constraints.gridx = 0;//Necesita estirarse
-       constraints.gridy = 3;
-       constraints.gridwidth = 4;
-       constraints.gridheight = 1;
-       constraints.weightx = 1.0;
-       constraints.weighty = 0.2;
-       constraints.anchor = GridBagConstraints.NORTHWEST;
-       p[2].add (pacientes[3], constraints);
-       
-       constraints.gridx = 0;//Necesita estirarse
-       constraints.gridy = 4;
-       constraints.gridwidth = 4;
-       constraints.gridheight = 1;
-       constraints.weightx = 1.0;
-       constraints.weighty = 0.2;
-       constraints.anchor = GridBagConstraints.NORTHWEST;
-       p[2].add (pacientes[4], constraints);
        
        
        
@@ -1157,7 +1161,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         PanelCita = new javax.swing.JPanel();
         FechaLbl = new javax.swing.JLabel();
         PanelDetalle = new javax.swing.JPanel();
-        ScrollHistoria = new javax.swing.JScrollPane();
         panelHistoria = new javax.swing.JPanel();
         PanelPacientes = new javax.swing.JPanel();
         PanelPacientesScroll = new javax.swing.JScrollPane();
@@ -1235,10 +1238,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             panelHistoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 234, Short.MAX_VALUE)
         );
-
-        ScrollHistoria.setViewportView(panelHistoria);
-        panelHistoria.getAccessibleContext().setAccessibleName("Historial");
-        panelHistoria.getAccessibleContext().setAccessibleDescription("Historial");
 
         PanelPacientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Pacientes"));
 
@@ -1334,32 +1333,32 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                 .addComponent(PanelPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(PanelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ScrollHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(106, 106, 106)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(PanelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PanelCita, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PanelCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(PanelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(PanelCita, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(PanelCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addComponent(ScrollHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(197, Short.MAX_VALUE))
+                        .addGap(53, 53, 53)
+                        .addComponent(panelHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(223, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(PanelPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(97, 97, 97))
         );
 
-        PanelPacientes.getAccessibleContext().setAccessibleName("Pacientes");
+        panelHistoria.getAccessibleContext().setAccessibleName("Historial");
+        panelHistoria.getAccessibleContext().setAccessibleDescription("Historial");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1457,7 +1456,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     private javax.swing.JPanel PanelDetalle;
     private javax.swing.JPanel PanelPacientes;
     private javax.swing.JScrollPane PanelPacientesScroll;
-    private javax.swing.JScrollPane ScrollHistoria;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
