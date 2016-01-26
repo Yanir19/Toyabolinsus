@@ -7,6 +7,8 @@
 package Citas;
 
 import javax.swing.JLabel;
+import medical.Paciente;
+import org.json.JSONObject;
 
 /**
  *
@@ -19,6 +21,8 @@ String Hora;
 String Paciente;
 String Cedula;
 String fecha;
+String motivo;
+JSONObject paciente;
 
     public Citas(String noCita, String hora){
         this.Hora=hora;

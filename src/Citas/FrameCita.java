@@ -128,6 +128,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     boolean comparteInfo;
     SimpleDateFormat formato;
     boolean agregarPaciente;//Si esta en verdadero entonces se debe agregar el paciente, sino no.
+    int idPaciente;
     ////////////// ELEMENTOS DEL PANEL DETALLE
     
     
@@ -817,7 +818,9 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                     if(citas[j].getHora().equals(obj.get("hora"))){
                         pacienteporid = rutasLeer.leer("http://localhost/API_Citas/public/Pacientes/porId/"+obj.get("paciente"));
                         paciente = (JSONObject) pacienteporid.get(0);
+                        citas[j].motivo=obj.get("motivo").toString();
                         citas[j].Paciente=obj.get("paciente").toString();
+                        citas[j].paciente=paciente;
                         citas[j].setText(citas[j].getText()+" "+obj.get("paciente")+ " "+ paciente.get("cedula"));
                         total++;
                          //if(citas [i].getHora() == citasporfecha.get("id"))
@@ -898,7 +901,11 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                         Citas seleccion = new Citas();
                                 seleccion = (Citas) e.getComponent();
                                 System.out.println("Label  clickeado sin cita" + seleccion.getText());
-                                acciones(seleccion);
+                        try {
+                            acciones(seleccion);
+                        } catch (JSONException ex) {
+                            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 });
             PanelCita.add (citas[i] ,gbc);
@@ -916,18 +923,10 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         
         if (e.getSource()==agregarB) {
             try {
-                
-                
                 //Cita
                 JSONObject cita=new JSONObject();
                 cita.put("fecha",fechaJ.getText());
                 cita.put("hora",horaJ.getText());
-                cita.put("paciente",3);
-                cita.put("medicos","1");
-                cita.put("tratamiento","tratamiento");
-                cita.put("diagnostico","diagnostico");
-                cita.put("motivo", motivosTA.getText());
-                System.out.print(cita);
                 
                 //Paciente
                 if(agregarPaciente){
@@ -939,16 +938,32 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                     paciente.put("correo",correoJ.getText());
                     paciente.put("tlfncasa",telefonoCasaJ.getText());
                     paciente.put("tlfncelular",telefonoCelularJ.getText());
-                    System.out.print(paciente);
+                    System.out.println("Entre en el IF y agregare paciente" + paciente);
                     rutasAdd.add("http://localhost/API_Citas/public/Pacientes/create", paciente);
+                    JSONArray aux = new JSONArray();
+                    JSONObject pacienteDentro = new JSONObject();
+                    aux = (rutasLeer.leer("http://localhost/API_Citas/public/Pacientes/porCedula/"+cedulaJ.getText()));
+                    pacienteDentro = (JSONObject) aux.get(0);
+                    cita.put("paciente",pacienteDentro.getInt("id"));//Le a;ado el id del paciente a la cita segun el que se le acaba de crear
+                    
+                    
+                }else{
+                    cita.put("paciente",idPaciente);//Le a;ado el id del paciente que fue buscado
                 }
                 
-                rutasAdd.add("http://localhost/API_Citas/public/Citas/insertarCita", cita);
+                    cita.put("medicos","1");
+                    cita.put("tratamiento","tratamiento");
+                    cita.put("diagnostico","diagnostico");
+                    cita.put("motivo", motivosTA.getText());
+                    System.out.print(cita);
+                
+                rutasAdd.add("http://localhost/API_Citas/public/Citas/create", cita);
                 
                 setCitas();
                 if(total==medico.getCitasPorDia()){
                 JSONObject fecha = new org.json.JSONObject();
                 fecha.put("diasOcupados", formato.format(jCalendar1.getDate()));
+                System.out.println("Esta es la fecha a a;adir" + fecha.toString());
                 rutasAdd.add("http://localhost/API_Citas/public/Diasocupados/insertarfecha", fecha);
                 jCalendar1.getDayChooser().addDateEvaluator(new DJFechasEspInv());//Pinta las Fechas ocupadas en rojo 
                 jCalendar1.setDate(jCalendar1.getDate());
@@ -1008,6 +1023,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                 try {
                     agregarPaciente=false;//Si se consigue, entonces no se debe a;adir.
                     paciente =(JSONObject) aux.get(0);
+                    idPaciente=paciente.getInt("id");
                     cedulaJ.setText(paciente.getString("cedula"));
                     nombreJ.setText(paciente.getString("nombre"));
                     apellidoJ.setText(paciente.getString("apellido"));
@@ -1047,7 +1063,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         
     }
    
-     private void acciones(Citas cita){
+     private void acciones(Citas cita) throws JSONException{
         
         BorrarTextFields();
         if(cita.Paciente==null){
@@ -1081,10 +1097,16 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             horaJ.setText(cita.Hora);
             nombreJ.setText(cita.Paciente);
             cedulaJ.setText(cita.Cedula);
-       /*     fechaJ.setText(cita.getFecha());
-            horaJ.setText(cita.getHora());
-            nombreJ.setText(cita.getPaciente());
-            cedulaJ.setText(cita.getPaciente()); */
+     
+            cedulaJ.setText(cita.paciente.getString("cedula"));
+            nombreJ.setText(cita.paciente.getString("nombre"));
+            apellidoJ.setText(cita.paciente.getString("apellido"));
+            direccionJ.setText(cita.paciente.getString("direccion"));
+            correoJ.setText(cita.paciente.getString("correo"));
+            telefonoCasaJ.setText(cita.paciente.getString("tlfncasa"));
+            telefonoCelularJ.setText(cita.paciente.getString("tlfncelular"));
+            motivosTA.setText(cita.motivo);
+            
             fechaJ.setEditable(false);
             horaJ.setEditable(false);
             nombreJ.setEditable(false);
