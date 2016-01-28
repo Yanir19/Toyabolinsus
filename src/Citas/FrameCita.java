@@ -1012,6 +1012,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             System.out.println(aux.toString());
             if(aux.toString().equals("[]")){//Si no se encontro el paciente en la BD se setea agregarPAciente para que se agregue a la BD
                 agregarPaciente = true;
+                BorrarTextFields();
                 String[] opciones = {"Aceptar"};
                 int opcion = JOptionPane.showOptionDialog(
                         null //componente

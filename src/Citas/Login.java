@@ -6,6 +6,7 @@
 package Citas;
 
 import Services.Add;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,11 +22,13 @@ import org.json.simple.parser.ParseException;
 public class Login extends javax.swing.JFrame {
 
     public static String username;
+    Color colorDelPapa;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        
     }
 
     /**
@@ -45,6 +48,7 @@ public class Login extends javax.swing.JFrame {
         PassTxtF = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(41, 128, 185));
 
         jLabel1.setText("Usuario:");
 
@@ -126,6 +130,11 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_UsuarioTxtFActionPerformed
 
+        private int hex( String color_hex )
+    {
+        return Integer.parseInt(color_hex,  16 );
+    }
+    
     private void AceptarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarBtnActionPerformed
         try {
             //Usuario
