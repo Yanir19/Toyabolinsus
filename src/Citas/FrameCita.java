@@ -652,12 +652,12 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
       
         if(pacientesMedico.toString().equals("[]")){
             constraints.gridx = 0;//Necesita estirarse
-            constraints.gridy = 3;
-            constraints.gridwidth = 1;
+            constraints.gridy = 0;
+            constraints.gridwidth = 2;
             constraints.gridheight = 1;
             constraints.weightx = 1.0;
             constraints.weighty = 1.0;
-            constraints.anchor = GridBagConstraints.CENTER;
+            constraints.anchor = GridBagConstraints.NORTHEAST;
             p[2].add (paciente_mensaje, constraints);
         }else{
             for (int i = 0;i<pacientesMedico.length();i++){
