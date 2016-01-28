@@ -141,6 +141,9 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     public FrameCita() throws ClientProtocolException, IOException, JSONException, ParseException, java.text.ParseException {
         
         initComponents();
+        
+        
+        
         System.out.println(Login.username);
         this.getContentPane().setLayout(new GridBagLayout());
         rutasLeer = new Leer();

@@ -5,6 +5,13 @@
  */
 package Citas;
 
+import Services.Add;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  *
  * @author Yanir
@@ -14,6 +21,7 @@ public class Historia extends javax.swing.JPanel {
     /**
      * Creates new form Historia
      */
+    private String id = "1";
     public Historia() {
         initComponents();
     }
@@ -27,26 +35,29 @@ public class Historia extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        PacienteLbl = new javax.swing.JLabel();
+        MotivoLbl = new javax.swing.JLabel();
+        HistoriaLbl = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        HistoriaTxtArea = new javax.swing.JTextArea();
         AceptarBtn = new javax.swing.JButton();
         SalirBtn = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        TratamientoLbl = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        TratamientoTxtArea = new javax.swing.JTextArea();
+        FechaLbl = new javax.swing.JLabel();
 
-        jLabel1.setText("Paciente:");
+        setBorder(javax.swing.BorderFactory.createTitledBorder("Historia"));
 
-        jLabel2.setText("Motivo:");
+        PacienteLbl.setText("Paciente:");
 
-        jLabel3.setText("Historia:");
+        MotivoLbl.setText("Motivo:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        HistoriaLbl.setText("Historia:");
+
+        HistoriaTxtArea.setColumns(20);
+        HistoriaTxtArea.setRows(5);
+        jScrollPane1.setViewportView(HistoriaTxtArea);
 
         AceptarBtn.setText("Aceptar");
         AceptarBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -55,13 +66,15 @@ public class Historia extends javax.swing.JPanel {
             }
         });
 
-        SalirBtn.setText("Salir");
+        SalirBtn.setText("Atrás");
 
-        jLabel4.setText("Tratamiento:");
+        TratamientoLbl.setText("Tratamiento:");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        TratamientoTxtArea.setColumns(20);
+        TratamientoTxtArea.setRows(5);
+        jScrollPane2.setViewportView(TratamientoTxtArea);
+
+        FechaLbl.setText("Fecha:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -76,18 +89,20 @@ public class Historia extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(AceptarBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(189, 189, 189)
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(PacienteLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
+                        .addComponent(MotivoLbl)
+                        .addGap(138, 138, 138)
+                        .addComponent(FechaLbl)
+                        .addGap(71, 71, 71))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TratamientoLbl)
+                            .addComponent(HistoriaLbl))
                         .addGap(25, 25, 25)
-                        .addComponent(jScrollPane2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane2))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -95,18 +110,21 @@ public class Historia extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(PacienteLbl)
+                    .addComponent(MotivoLbl)
+                    .addComponent(FechaLbl))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(HistoriaLbl)
+                        .addGap(0, 181, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TratamientoLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(AceptarBtn)
                     .addComponent(SalirBtn))
                 .addContainerGap())
@@ -114,20 +132,31 @@ public class Historia extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AceptarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarBtnActionPerformed
+        try {
+            
+            JSONObject historia_paciente=new JSONObject();
+            historia_paciente.put("id","1");
+            historia_paciente.put("tratamiento",TratamientoTxtArea.getText());
+            historia_paciente.put("diagnostico",HistoriaTxtArea.getText());
+            new Add().add("http://localhost/API_Citas/public/Citas/edit/" + this.id, historia_paciente);   
         
+        } catch (JSONException | IOException ex) {
+            Logger.getLogger(Historia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_AceptarBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AceptarBtn;
+    private javax.swing.JLabel FechaLbl;
+    private javax.swing.JLabel HistoriaLbl;
+    private javax.swing.JTextArea HistoriaTxtArea;
+    private javax.swing.JLabel MotivoLbl;
+    private javax.swing.JLabel PacienteLbl;
     private javax.swing.JButton SalirBtn;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel TratamientoLbl;
+    private javax.swing.JTextArea TratamientoTxtArea;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }

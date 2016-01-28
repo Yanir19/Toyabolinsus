@@ -7,9 +7,11 @@ package Citas;
 
 import Services.Add;
 import java.awt.Color;
+import java.awt.Image;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +30,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        
+        Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
+        setIconImage(icon);
     }
 
     /**

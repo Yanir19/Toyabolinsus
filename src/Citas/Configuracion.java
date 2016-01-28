@@ -5,11 +5,12 @@
  */
 package Citas;
 
+import Services.Add;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -21,8 +22,10 @@ public class Configuracion extends javax.swing.JFrame {
     /**
      * Creates new form Configuracion
      */
+    
     public Configuracion() {
         initComponents();
+        
     }
 
     /**
@@ -46,7 +49,7 @@ public class Configuracion extends javax.swing.JFrame {
         HorarioTxtF2 = new javax.swing.JTextField();
         HoraCmbBox2 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        CompartirCheckB = new javax.swing.JCheckBox();
+        CompartirChckBox = new javax.swing.JCheckBox();
         AceptarBtn = new javax.swing.JButton();
         SalirBtn = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
@@ -98,6 +101,11 @@ public class Configuracion extends javax.swing.JFrame {
         jLabel6.setText("Compartir información:");
 
         AceptarBtn.setText("Aceptar");
+        AceptarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarBtnActionPerformed(evt);
+            }
+        });
 
         SalirBtn.setText("Salir");
         SalirBtn.setMaximumSize(new java.awt.Dimension(71, 23));
@@ -188,7 +196,7 @@ public class Configuracion extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(EditDatBtn)
-                                .addComponent(CompartirCheckB)
+                                .addComponent(CompartirChckBox)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
@@ -239,7 +247,7 @@ public class Configuracion extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(CompartirCheckB))
+                    .addComponent(CompartirChckBox))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -299,6 +307,29 @@ public class Configuracion extends javax.swing.JFrame {
         user.setLocationRelativeTo(null);
     }//GEN-LAST:event_EditDatBtnActionPerformed
 
+    private void AceptarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarBtnActionPerformed
+        try {
+            
+            JSONObject configuracion=new JSONObject();
+            configuracion.put("username", CompartirChckBox.isSelected());
+            configuracion.put("comparte", CompartirChckBox.isSelected());
+            configuracion.put("tiempoatencion", AtencionSpin.getValue());
+            configuracion.put("lunes",Lunes.isSelected());
+            configuracion.put("martes",Martes.isSelected());
+            configuracion.put("miercoles",Miercoles.isSelected());
+            configuracion.put("jueves",Jueves.isSelected());
+            configuracion.put("viernes",Viernes.isSelected());
+            configuracion.put("sabado",Sabado.isSelected());
+            configuracion.put("domingo",Domingo.isSelected());
+            configuracion.put("horainicio", HorarioTxtF1.getText() + " " + HoraCmbBox1.getSelectedItem());
+            configuracion.put("horafin", HorarioTxtF2.getText() + " " + HoraCmbBox2.getSelectedItem());
+            new Add().add("http://localhost/API_Citas/public/Medicos/edit/" + Login.username, configuracion);
+        } catch (JSONException | IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                                
+    }//GEN-LAST:event_AceptarBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -337,7 +368,7 @@ public class Configuracion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AceptarBtn;
     private javax.swing.JSpinner AtencionSpin;
-    private javax.swing.JCheckBox CompartirCheckB;
+    private javax.swing.JCheckBox CompartirChckBox;
     private javax.swing.JCheckBox Domingo;
     private javax.swing.JButton EditDatBtn;
     private javax.swing.JComboBox<String> HoraCmbBox1;
