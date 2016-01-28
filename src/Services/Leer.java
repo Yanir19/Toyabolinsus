@@ -42,7 +42,7 @@ public JSONArray leer(String ruta) throws ClientProtocolException, IOException, 
   
    JSONArray json = new JSONArray(content);
    
-    System.out.println("ESTE ES EL JSON en LEER " +ruta + "\nResponse: "+json);
+    //System.out.println("ESTE ES EL JSON en LEER " +ruta + "\nResponse: "+json);
    
    
         return json;

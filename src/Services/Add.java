@@ -101,9 +101,10 @@ public class Add {
         url.setHeader("Accept", "application/json");              // acceptamos el json
         url.setEntity(se); // lo agregamos al post
         HttpResponse response = client.execute(url); // hacemos la peticion
-        System.out.println("RESPUESTA");
+        System.out.println("RESPUESTA ADD");
         System.out.println(response.toString()); // imprimo la respuesta
-        
+        System.out.println("URL ADD");
+        System.out.println(ruta);
         // de aqui para abajo sirve para ver errores,
         // por ejemplo s hay algun error con el servidor esto te manda la pagina de respuesta del servidor
         // y te la escribe en la consola
