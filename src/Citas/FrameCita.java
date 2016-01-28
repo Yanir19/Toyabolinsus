@@ -662,7 +662,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             p[2].add (paciente_mensaje, constraints);
         }else{
             for (int i = 0;i<pacientesMedico.length();i++){
-                 cambiarColorPanel(pacientes[i],colorDelPapa);
                 temp = (JSONObject)pacientesMedico.get(i);
 
                 idPaciente = temp.getInt("id");
@@ -675,7 +674,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                 TlfCelularPaciente = temp.getString("tlfncelular");
 
                 pacientes[i] = new Pacientes(idPaciente, CedulaPaciente, NombrePaciente, ApellidoPaciente, DireccionPaciente, CorreoPaciente, TlfCasaPaciente, TlfCelularPaciente);
-
+                
+                 cambiarColorPanel(pacientes[i],colorDelPapa);
                  constraints.gridx = 0;//Necesita estirarse
                  constraints.gridy = i;
                  constraints.gridwidth = 4;

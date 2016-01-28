@@ -94,25 +94,154 @@ Font font;
         
         GridBagConstraints gbc = new GridBagConstraints();
         this.setLayout(new GridBagLayout());
-              
         disenoLabel(CedulaL);
-        disenoLabel(this.Cedula);
+        disenoLabel(NombreL);
+        disenoLabel(ApellidoL);
+        disenoLabel(DireccionL);
+        disenoLabel(CorreoL);
+        disenoLabel(TlfCasaL);
+        disenoLabel(TlfCelularL);
         
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        this.add(this.CedulaL, gbc);
         
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        this.add(this.Cedula, gbc);
+        // CEDULA
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHEAST;
+            this.add(this.CedulaL, gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 0;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            this.add(this.Cedula, gbc);
+        // FIN CEDULA    
+                    
+        // NOMBRE    
+            gbc.gridx = 4;
+            gbc.gridy = 0;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHEAST;
+            this.add(this.NombreL, gbc);
+
+            gbc.gridx = 5;
+            gbc.gridy = 0;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            this.add(this.Nombre, gbc);
+        // FIN NOMBRE
+            
+        // APELLIDO    
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHEAST;
+            this.add(this.ApellidoL, gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 1;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            this.add(this.Apellido, gbc);
+        // FIN APELLIDO    
+      
+        // CORREO    
+            gbc.gridx = 4;
+            gbc.gridy = 1;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHEAST;
+            this.add(this.CorreoL, gbc);
+
+            gbc.gridx = 5;
+            gbc.gridy = 1;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            this.add(this.Correo, gbc);
+        // FIN CORREO
+            
+        // TLF CASA    
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHEAST;
+            this.add(this.TlfCasaL, gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 2;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            this.add(this.TlfCasa, gbc);
+        // FIN TLF CASA    
+      
+        // TLF CELULAR    
+            gbc.gridx = 4;
+            gbc.gridy = 2;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHEAST;
+            this.add(this.TlfCelularL, gbc);
+
+            gbc.gridx = 5;
+            gbc.gridy = 2;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            this.add(this.TlfCelular, gbc);
+        // FIN TLF CELULAR  
+            
+        // DIRECCION    
+            gbc.gridx = 0;
+            gbc.gridy = 3;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHEAST;
+            this.add(this.DireccionL, gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 3;
+            gbc.gridwidth = 4;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.2;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            this.add(this.Direccion, gbc);
+        // FIN DIRECCION     
       
         
     }
