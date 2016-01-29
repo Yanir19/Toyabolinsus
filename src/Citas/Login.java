@@ -32,6 +32,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
         setIconImage(icon);
+        this.getContentPane().setBackground(colorDelPapa);
     }
 
     /**
@@ -57,7 +58,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña:");
 
-        UsuarioTxtF.setText("mboscan");
+        UsuarioTxtF.setText("lino");
         UsuarioTxtF.setToolTipText("");
         UsuarioTxtF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,7 +134,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_UsuarioTxtFActionPerformed
 
-        private int hex( String color_hex )
+private int hex( String color_hex )
     {
         return Integer.parseInt(color_hex,  16 );
     }

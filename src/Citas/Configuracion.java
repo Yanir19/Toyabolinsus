@@ -6,9 +6,17 @@
 package Citas;
 
 import Services.Add;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -18,16 +26,60 @@ import org.json.simple.parser.ParseException;
  * @author Yanir
  */
 public class Configuracion extends javax.swing.JFrame {
-
+    Color colorDelPapa;
+    Color colorBotones;
+    Font font;
     /**
      * Creates new form Configuracion
      */
     
-    public Configuracion() {
+    public Configuracion() throws IOException {
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
+        setIconImage(icon);
+        colorBotones = new Color (hex ("2C3E50"));//Color d elos botonte
+        colorDelPapa = new Color (hex("A9D0F5"));//Color del backgorud del papa
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("Sertig.otf"));
+            font  = font.deriveFont(Font.BOLD, 11);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disenoLabel(jLabel1);
+        disenoLabel(jLabel2);
+        disenoLabel(jLabel3);
+        disenoLabel(jLabel4);
+        disenoLabel(jLabel5);
+        disenoLabel(jLabel6);
+        disenoLabel(jLabel11);
+        disenoBotones(EditDatBtn);
+        disenoBotones(AceptarBtn);
+        disenoBotones(SalirBtn);
+        this.getContentPane().setBackground(colorDelPapa);
         
+        
+        setTitle("Configuracion");
     }
-
+    
+    private int hex( String color_hex )
+        {
+            return Integer.parseInt(color_hex,  16 );
+        }
+        private void disenoLabel(JLabel actual){
+            font=font  = font.deriveFont(Font.ITALIC, 14);
+            actual.setFont(font);
+    }
+    
+ private void disenoBotones(JButton actual){
+       actual.setBackground(colorBotones);
+       font  = font.deriveFont(Font.TYPE1_FONT, 13);
+       actual.setFont(font);
+       actual.setBorderPainted(false);
+       actual.setFocusPainted(false);
+        //actual.setContentAreaFilled(false);
+        
+       actual.setOpaque(false);
+   }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -287,7 +339,12 @@ public class Configuracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        Configuracion configuracion = new Configuracion();
+        Configuracion configuracion = null;
+        try {
+            configuracion = new Configuracion();
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         configuracion.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -360,7 +417,11 @@ public class Configuracion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Configuracion().setVisible(true);
+                try {
+                    new Configuracion().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

@@ -119,7 +119,12 @@ public class Historial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        Configuracion configuracion = new Configuracion();
+        Configuracion configuracion = null;
+        try {
+            configuracion = new Configuracion();
+        } catch (IOException ex) {
+            Logger.getLogger(Historial.class.getName()).log(Level.SEVERE, null, ex);
+        }
         configuracion.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
