@@ -84,7 +84,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="UsuarioTxtF">
       <Properties>
-        <Property name="text" type="java.lang.String" value="lino"/>
+        <Property name="text" type="java.lang.String" value="mboscan"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>

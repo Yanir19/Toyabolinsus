@@ -6,6 +6,7 @@
 package Citas;
 
 import Services.Add;
+import Services.Leer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -14,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
+import org.apache.http.client.ClientProtocolException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -34,7 +37,34 @@ public class Configuracion extends javax.swing.JFrame {
      */
     
     public Configuracion() throws IOException {
+        
+        try {
         initComponents();
+            Leer rutasLeer = new Leer();
+            JSONArray config = new JSONArray();
+            JSONObject obj = new JSONObject();
+            JSONObject horario = new JSONObject();
+            JSONObject medico = new JSONObject();
+            JSONObject dias = new JSONObject();
+            config = rutasLeer.leer("http://localhost/API_Citas/public/Medicos/configuracion/"+Login.username);   
+            obj = (JSONObject) config.get(0);
+            horario = obj.getJSONObject("horario");
+            medico = obj.getJSONObject("medico");
+            dias = obj.getJSONObject("dias");
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            HorarioTxtF1.setText(horario.getString("horainicio"));
+            HorarioTxtF2.setText(horario.getString("horafin"));
+            CompartirChckBox.setSelected(medico.getInt("comparte") != 0);
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            Lunes.setSelected(dias.getInt("lunes") != 0);
+            Martes.setSelected(dias.getInt("martes") != 0);
+            Miercoles.setSelected(dias.getInt("miercoles") != 0);
+            Jueves.setSelected(dias.getInt("jueves") != 0);
+            Viernes.setSelected(dias.getInt("viernes") != 0);
+            Sabado.setSelected(dias.getInt("sabado") != 0);
+            Domingo.setSelected(dias.getInt("domingo") != 0);
         Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
         setIconImage(icon);
         colorBotones = new Color (hex ("2C3E50"));//Color d elos botonte
@@ -45,21 +75,25 @@ public class Configuracion extends javax.swing.JFrame {
         } catch (FontFormatException ex) {
             Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
         }
-        disenoLabel(jLabel1);
+    //        disenoLabel(jLabel1);
         disenoLabel(jLabel2);
         disenoLabel(jLabel3);
         disenoLabel(jLabel4);
         disenoLabel(jLabel5);
         disenoLabel(jLabel6);
         disenoLabel(jLabel11);
-        disenoBotones(EditDatBtn);
+    //        disenoBotones(EditDatBtn);
         disenoBotones(AceptarBtn);
         disenoBotones(SalirBtn);
         this.getContentPane().setBackground(colorDelPapa);
-        
-        
         setTitle("Configuracion");
+        } catch (ClientProtocolException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
     }
+    
+}
     
     private int hex( String color_hex )
         {
@@ -332,6 +366,7 @@ public class Configuracion extends javax.swing.JFrame {
         try {
             FrameCita PanelCitas = new FrameCita();
             PanelCitas.setVisible(true);
+            this.dispose();
         } catch (IOException | JSONException | ParseException | java.text.ParseException ex) {
             Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
         }
