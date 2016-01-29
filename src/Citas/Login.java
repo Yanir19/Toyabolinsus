@@ -7,11 +7,15 @@ package Citas;
 
 import Services.Add;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,13 +29,24 @@ public class Login extends javax.swing.JFrame {
 
     public static String username;
     Color colorDelPapa;
+    Font font;
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Login() throws IOException {
         initComponents();
         Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
         setIconImage(icon);
+        colorDelPapa = new Color (hex("A9D0F5"));
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("Sertig.otf"));
+            font  = font.deriveFont(Font.BOLD, 11);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disenoLabel(jLabel1);
+        disenoLabel(jLabel2);
+        this.getContentPane().setBackground(colorDelPapa);
     }
 
     /**
@@ -57,7 +72,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña:");
 
-        UsuarioTxtF.setText("mboscan");
+        UsuarioTxtF.setText("lino");
         UsuarioTxtF.setToolTipText("");
         UsuarioTxtF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,7 +148,12 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_UsuarioTxtFActionPerformed
 
-        private int hex( String color_hex )
+        private void disenoLabel(JLabel actual){
+            font=font  = font.deriveFont(Font.ROMAN_BASELINE, 14);
+            actual.setFont(font);
+    }    
+    
+private int hex( String color_hex )
     {
         return Integer.parseInt(color_hex,  16 );
     }
@@ -200,7 +220,11 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                try {
+                    new Login().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

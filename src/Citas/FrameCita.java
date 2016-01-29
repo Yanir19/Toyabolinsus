@@ -765,7 +765,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     
     
     
-       private void disenoBotones(JButton actual){
+ private void disenoBotones(JButton actual){
        actual.setBackground(colorBotones);
        font  = font.deriveFont(Font.TYPE1_FONT, 13);
        actual.setFont(font);
@@ -1365,6 +1365,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         Usuario user = new Usuario();
         user.setVisible(true);
+        
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -1379,9 +1380,14 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        Configuracion configuracion = new Configuracion();
-        configuracion.setVisible(true);
-        dispose();
+        try {
+            Configuracion configuracion = null;
+            configuracion = new Configuracion();
+            configuracion.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
