@@ -7,11 +7,19 @@ package Citas;
 
 import Services.Add;
 import Services.Leer;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,10 +34,13 @@ import org.json.JSONObject;
 public class Usuario extends javax.swing.JFrame {
     
     Leer rutasLeer;
+    Color colorDelPapa;
+    Color colorBotones;
+    Font font;
     /**
      * Creates new form Usuario
      */
-    public Usuario() {
+    public Usuario() throws IOException {
         
         initComponents();
         StatusMedico();
@@ -51,7 +62,52 @@ public class Usuario extends javax.swing.JFrame {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+ Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
+        setIconImage(icon);
+        colorBotones = new Color (hex ("2C3E50"));//Color d elos botonte
+        colorDelPapa = new Color (hex("A9D0F5"));//Color del backgorud del papa
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("Sertig.otf"));
+            font  = font.deriveFont(Font.BOLD, 11);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disenoBotones(AceptarBtn);
+        disenoBotones(EditarBtn);
+        disenoBotones(SalirBtn);
+        disenoLabel(MinutosLbl);
+        disenoLabel(jLabel1);
+        disenoLabel(jLabel10);
+        disenoLabel(jLabel12);
+        disenoLabel(jLabel2);
+        disenoLabel(jLabel3);
+        disenoLabel(jLabel4);
+        disenoLabel(jLabel5);
+        disenoLabel(jLabel6);
+        disenoLabel(jLabel7);
+        disenoLabel(jLabel8);
+        disenoLabel(jLabel9);
     }
+    
+            private void disenoLabel(JLabel actual){
+            font=font  = font.deriveFont(Font.ROMAN_BASELINE, 14);
+            actual.setFont(font);
+    }    
+    
+private int hex( String color_hex )
+    {
+        return Integer.parseInt(color_hex,  16 );
+    }
+    
+ private void disenoBotones(JButton actual){
+       font  = font.deriveFont(Font.TYPE1_FONT, 13);
+       actual.setFont(font);
+       actual.setBorderPainted(false);
+       actual.setFocusPainted(false);
+        //actual.setContentAreaFilled(false);
+        
+       actual.setOpaque(false);
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -538,7 +594,11 @@ public class Usuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Usuario().setVisible(true);
+                try {
+                    new Usuario().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

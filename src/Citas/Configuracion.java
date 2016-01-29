@@ -359,12 +359,22 @@ public class Configuracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Usuario user = new Usuario();
+        Usuario user = null;
+        try {
+            user = new Usuario();
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         user.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void EditDatBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDatBtnActionPerformed
-        Usuario user = new Usuario();
+        Usuario user = null;
+        try {
+            user = new Usuario();
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         user.setVisible(true);
         user.setLocationRelativeTo(null);
     }//GEN-LAST:event_EditDatBtnActionPerformed

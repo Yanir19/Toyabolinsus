@@ -30,10 +30,12 @@ import Services.Leer;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
@@ -142,14 +144,20 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         
         initComponents();
         
-        
-        
+        JSONArray medicoArray = new JSONArray();
+        JSONObject objMedico = new JSONObject();
+        JSONObject objHorario = new JSONObject();
         System.out.println(Login.username);
         this.getContentPane().setLayout(new GridBagLayout());
         rutasLeer = new Leer();
         rutasAdd = new Add();
         formato = new SimpleDateFormat("yyyy-MM-dd");
+        //medicoArray = rutasLeer.leer("http://localhost/API_Citas/public/Medicos/configuracion/"+Login.username);
+        //objMedico = (JSONObject) ((JSONObject) medicoArray.get(0)).get("Medico");
+        //objHorario = (JSONObject) ((JSONObject) medicoArray.get(0)).get("Horario");
         medico = new Medico(2,0,3,30); //MEDICO EN SESIOOON
+        Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
+        setIconImage(icon);
         citas = new Citas [medico.cantidadDeCitasxDia(10, 30)];
         comparteInfo=true;//Esto deber[a ser buscado en la base de datos
         agregarPaciente = true;
@@ -256,7 +264,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         
         this.setBackground(colorDelPapa);//Color del backgroud
         //BOTONES INICIALIZACION
-        modificarB = new JButton("Modificar");
+        modificarB = new JButton("Modificar Paciente");
         eliminarB = new JButton("Eliminar");
         agregarB = new JButton("Agregar");
         atrasB= new JButton("Atras");
@@ -557,7 +565,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
        constraints.weightx = 0.0;
        
 	BotonAtras.setLayout(flowLayout1);
-        BotonAtras.add(atrasB);
+        //BotonAtras.add(atrasB);
         
         PanelDetalle.add(BotonAtras, constraints);
         
@@ -835,7 +843,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                         //citas [i] = new Citas (i);  
                         citas[j].setBorder(BorderFactory.createLineBorder(Color.black));
                         citas[j].setOpaque(true);
-
+                        
                     
                     }
                 }
@@ -990,9 +998,12 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         
         if (e.getSource()==modificarB) {
             
+            
+            modificarB.setEnabled(false);
             return;
         }
         if (e.getSource()==eliminarB) {
+            //rutasAdd.add("http://localhost/API_Citas/public/Pacientes/create", paciente);
             
             return;
         }
@@ -1029,6 +1040,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                 );
             }else{
                 try {
+                    modificarB.setEnabled(true);
                     agregarPaciente=false;//Si se consigue, entonces no se debe a;adir.
                     paciente =(JSONObject) aux.get(0);
                     idPaciente=paciente.getInt("id");
@@ -1096,11 +1108,12 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             horaJ.setText(cita.Hora);
             
         }else{
+            
+            eliminarB.setEnabled(true);
             atrasB.setEnabled(false);
             buscarB.setEnabled(false);
             modificarB.setEnabled(false);
             agregarB.setEnabled(false);
-            eliminarB.setEnabled(false);
             fechaJ.setText(cita.fecha);
             horaJ.setText(cita.Hora);
             nombreJ.setText(cita.Paciente);
@@ -1372,7 +1385,12 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     }//GEN-LAST:event_jCalendar1MouseClicked
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Usuario user = new Usuario();
+        Usuario user = null;
+        try {
+            user = new Usuario();
+        } catch (IOException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
         user.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

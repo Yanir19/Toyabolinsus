@@ -6,9 +6,17 @@
 package Citas;
 
 import Services.Add;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,9 +30,50 @@ public class Historia extends javax.swing.JPanel {
      * Creates new form Historia
      */
     private String id = "1";
-    public Historia() {
+        Color colorDelPapa;
+        Color colorBotones;
+    Font font;
+    public Historia() throws IOException {
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
+        setIconImage(icon);
+        colorBotones = new Color (hex ("2C3E50"));//Color d elos botonte
+        colorDelPapa = new Color (hex("A9D0F5"));//Color del backgorud del papa
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("Sertig.otf"));
+            font  = font.deriveFont(Font.BOLD, 11);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disenoBotones(AceptarBtn);
+        disenoBotones(SalirBtn);
+        disenoLabel(FechaLbl);
+        disenoLabel(HistoriaLbl);
+        disenoLabel(PacienteLbl);
+        disenoLabel(TratamientoLbl);
+        disenoLabel(MotivoLbl);
+        
     }
+    
+            private void disenoLabel(JLabel actual){
+            font=font  = font.deriveFont(Font.ROMAN_BASELINE, 14);
+            actual.setFont(font);
+    }    
+    
+private int hex( String color_hex )
+    {
+        return Integer.parseInt(color_hex,  16 );
+    }
+    
+ private void disenoBotones(JButton actual){
+       font  = font.deriveFont(Font.TYPE1_FONT, 13);
+       actual.setFont(font);
+       actual.setBorderPainted(false);
+       actual.setFocusPainted(false);
+        //actual.setContentAreaFilled(false);
+        
+       actual.setOpaque(false);
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -159,4 +208,8 @@ public class Historia extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
+
+    private void setIconImage(Image icon) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

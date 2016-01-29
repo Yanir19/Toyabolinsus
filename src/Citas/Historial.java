@@ -1,9 +1,17 @@
 package Citas;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
@@ -18,12 +26,27 @@ import org.json.JSONException;
  * @author Yanir
  */
 public class Historial extends javax.swing.JFrame {
-
+    Color colorDelPapa;
+    Color colorBotones;
+    Font font;
     /**
      * Creates new form Historial
      */
-    public Historial() {
+    public Historial() throws IOException {
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
+        setIconImage(icon);
+        colorBotones = new Color (hex ("2C3E50"));//Color d elos botonte
+        colorDelPapa = new Color (hex("A9D0F5"));//Color del backgorud del papa
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("Sertig.otf"));
+            font  = font.deriveFont(Font.BOLD, 11);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+  
+        this.getContentPane().setBackground(colorDelPapa);
     }
 
     /**
@@ -118,6 +141,26 @@ public class Historial extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+          private void disenoLabel(JLabel actual){
+            font=font  = font.deriveFont(Font.ROMAN_BASELINE, 14);
+            actual.setFont(font);
+    }    
+    
+private int hex( String color_hex )
+    {
+        return Integer.parseInt(color_hex,  16 );
+    }
+    
+ private void disenoBotones(JButton actual){
+       font  = font.deriveFont(Font.TYPE1_FONT, 13);
+       actual.setFont(font);
+       actual.setBorderPainted(false);
+       actual.setFocusPainted(false);
+        //actual.setContentAreaFilled(false);
+        
+       actual.setOpaque(false);
+   }
+    
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         Configuracion configuracion = null;
         try {
@@ -139,7 +182,12 @@ public class Historial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Usuario user = new Usuario();
+        Usuario user = null;
+        try {
+            user = new Usuario();
+        } catch (IOException ex) {
+            Logger.getLogger(Historial.class.getName()).log(Level.SEVERE, null, ex);
+        }
         user.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -173,7 +221,11 @@ public class Historial extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Historial().setVisible(true);
+                try {
+                    new Historial().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Historial.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

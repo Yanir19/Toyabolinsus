@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import org.json.JSONException;
@@ -46,6 +47,8 @@ public class Login extends javax.swing.JFrame {
         }
         disenoLabel(jLabel1);
         disenoLabel(jLabel2);
+        disenoBotones(AceptarBtn);
+        disenoBotones(SalirBtn);
         this.getContentPane().setBackground(colorDelPapa);
     }
 
@@ -158,6 +161,16 @@ private int hex( String color_hex )
         return Integer.parseInt(color_hex,  16 );
     }
     
+ private void disenoBotones(JButton actual){
+       font  = font.deriveFont(Font.TYPE1_FONT, 13);
+       actual.setFont(font);
+       actual.setBorderPainted(false);
+       actual.setFocusPainted(false);
+        //actual.setContentAreaFilled(false);
+        
+       actual.setOpaque(false);
+   }
+
     private void AceptarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarBtnActionPerformed
         try {
             //Usuario
