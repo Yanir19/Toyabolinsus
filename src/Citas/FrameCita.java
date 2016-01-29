@@ -152,10 +152,21 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         rutasLeer = new Leer();
         rutasAdd = new Add();
         formato = new SimpleDateFormat("yyyy-MM-dd");
-        //medicoArray = rutasLeer.leer("http://localhost/API_Citas/public/Medicos/configuracion/"+Login.username);
-        //objMedico = (JSONObject) ((JSONObject) medicoArray.get(0)).get("Medico");
-        //objHorario = (JSONObject) ((JSONObject) medicoArray.get(0)).get("Horario");
-        medico = new Medico(2,0,3,30); //MEDICO EN SESIOOON
+        medicoArray = rutasLeer.leer("http://localhost/API_Citas/public/Medicos/configuracion/"+Login.username);
+        objMedico = (JSONObject) ((JSONObject) medicoArray.get(0)).get("medico");
+        objHorario = (JSONObject) ((JSONObject) medicoArray.get(0)).get("horario");
+        int horaini = (objHorario.getString("horainicio").charAt(1))-48;
+        int horatotal = (objHorario.getString("horafin").charAt(1))-48;
+        System.out.println("HORAAAAAAA hora "+horaini+"");
+        System.out.println("HORAAAAAAA total fin y todo "+horatotal+"");
+        
+        medico = new Medico(horaini,0,horatotal-horaini,objMedico.getInt("tiempoatencion")); //MEDICO EN SESIOOON
+         System.out.println("HORAAAAAAA total fin y todo "+medico.getMAXhorasDeAtencionxdia()+"");
+        //medico = new Medico(objMedico.getString("horainicio").charAt(0),0,3,objMedico.getInt("tiempoatencion")); //MEDICO EN SESIOOON
+        System.out.println("HORAAAAAAA 1 "+objHorario.getString("horainicio").charAt(0)+"");
+        System.out.println("HORAAAAAAA 2 "+objHorario.getString("horainicio").charAt(1)+"");
+        
+        
         Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
         setIconImage(icon);
         citas = new Citas [medico.cantidadDeCitasxDia(10, 30)];
