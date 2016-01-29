@@ -31,6 +31,7 @@ public class Login extends javax.swing.JFrame {
     public static String username;
     Color colorDelPapa;
     Font font;
+    public static String rutaBase;
     /**
      * Creates new form Login
      */

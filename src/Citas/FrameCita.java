@@ -167,7 +167,7 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         rutasLeer = new Leer();
         rutasAdd = new Add();
         formato = new SimpleDateFormat("yyyy-MM-dd");
-        medicoArray = rutasLeer.leer("http://localhost/API_Citas/public/Medicos/configuracion/"+Login.username);
+        medicoArray = rutasLeer.leer(Login.rutaBase+"Medicos/configuracion/"+Login.username);
         objMedico = (JSONObject) ((JSONObject) medicoArray.get(0)).get("medico");
         objHorario = (JSONObject) ((JSONObject) medicoArray.get(0)).get("horario");
         int horaini = (objHorario.getString("horainicio").charAt(1))-48;
@@ -874,8 +874,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         
   
         
-        setCitas();
         dibujarPanelCita(medico);//Dibuja la "libreta" de las citas
+        setCitas();
   
         
         /////// fin para ENERO
@@ -969,8 +969,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
                 System.out.println("ENTRE EN EL FOR " + i + ": "+ obj.toString());
                 
                 for (int j = 0 ; j < citas.length ; j++){
-                   
-                    if(citas[j].getHora().equals(obj.get("hora"))){
+                    System.out.println(citas[j].getHora() +"");
+                    if(citas[j].getHora().equals(obj.get("hora").toString())){
                         pacienteporid = rutasLeer.leer(Login.rutaBase+"Pacientes/porId/"+obj.get("paciente"));
                         paciente = (JSONObject) pacienteporid.get(0);
                         citas[j].motivo=obj.get("motivo").toString();
