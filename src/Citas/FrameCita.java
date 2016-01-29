@@ -1388,7 +1388,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         }
         configuracion.setVisible(true);
         try {
-            Configuracion configuracion = null;
             configuracion = new Configuracion();
             configuracion.setVisible(true);
             this.dispose();
