@@ -21,11 +21,13 @@ import org.json.simple.parser.ParseException;
 public class Login extends javax.swing.JFrame {
 
     public static String username;
+    public static String rutaBase;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        rutaBase = "http://192.168.0.10:8000/";
     }
 
     /**
@@ -135,7 +137,7 @@ public class Login extends javax.swing.JFrame {
             Login.put("password",password);
             System.out.println(""+ password);
             Add post = new Add();
-            if(post.add("http://localhost/API_Citas/public/login", Login)){
+            if(post.add(rutaBase+"login", Login)){
                 username = UsuarioTxtF.getText();
                 FrameCita cita = new FrameCita();
                 cita.setVisible(true);

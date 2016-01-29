@@ -5,6 +5,7 @@
  */
 package datojava.jcalendar;
 
+import Citas.Login;
 import Services.Leer;
 import java.io.IOException;
 import java.text.ParseException;
@@ -38,7 +39,7 @@ public class DJJCalendar {
     public DJJCalendar() throws IOException, ClientProtocolException, JSONException {
         rutasLeer = new Leer();
         formato = new SimpleDateFormat("yyyy-MM-dd");
-        fechasOcupadasArray = rutasLeer.leer("http://localhost/API_Citas/public/Diasocupados/diasOcupados");
+        fechasOcupadasArray = rutasLeer.leer(Login.rutaBase+"Diasocupados/diasOcupados");
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     }
 

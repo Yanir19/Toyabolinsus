@@ -84,13 +84,13 @@ Font font;
         this.TlfCasaL.setText("<HTML> Tlf. Casa &nbsp &nbsp </HTML>");
         this.TlfCelularL.setText("<HTML> Tlf. Celular &nbsp &nbsp </HTML>");
         
-        this.Cedula.setText("25266350");
+        /*this.Cedula.setText("25266350");
         this.Nombre.setText("Miguel");
         this.Apellido.setText("Boscan");
         this.Direccion.setText("P Sherman, Calle Walady, 42, Sydney");
         this.Correo.setText("miguelboscan18@gmail.com");
         this.TlfCasa.setText("0286-9615193");
-        this.TlfCelular.setText("0424-9117263");
+        this.TlfCelular.setText("0424-9117263");*/
         
         GridBagConstraints gbc = new GridBagConstraints();
         this.setLayout(new GridBagLayout());
