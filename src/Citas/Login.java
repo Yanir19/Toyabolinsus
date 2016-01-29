@@ -159,7 +159,7 @@ public class Login extends javax.swing.JFrame {
         } catch (JSONException | IOException | ParseException | java.text.ParseException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-                            
+         dispose();
     }//GEN-LAST:event_AceptarBtnActionPerformed
 
     private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed

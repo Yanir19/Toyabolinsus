@@ -6,9 +6,11 @@
 package Citas;
 
 import Services.Add;
+import Services.Leer;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -24,7 +26,43 @@ public class Configuracion extends javax.swing.JFrame {
      */
     
     public Configuracion() {
-        initComponents();
+        try {
+            initComponents();
+            Leer rutasLeer = new Leer();
+            JSONArray config = new JSONArray();
+            JSONObject obj = new JSONObject();
+            JSONObject horario = new JSONObject();
+            JSONObject medico = new JSONObject();
+            JSONObject dias = new JSONObject();
+            
+            
+            config = rutasLeer.leer("http://localhost/API_Citas/public/Medicos/configuracion/"+Login.username);   
+            obj = (JSONObject) config.get(0);
+      
+            horario = obj.getJSONObject("horario");
+            medico = obj.getJSONObject("medico");
+            dias = obj.getJSONObject("dias");
+            
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            HorarioTxtF1.setText(horario.getString("horainicio"));
+            HorarioTxtF2.setText(horario.getString("horafin"));
+            CompartirChckBox.setSelected(medico.getInt("comparte") != 0);
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            Lunes.setSelected(dias.getInt("lunes") != 0);
+            Martes.setSelected(dias.getInt("martes") != 0);
+            Miercoles.setSelected(dias.getInt("miercoles") != 0);
+            Jueves.setSelected(dias.getInt("jueves") != 0);
+            Viernes.setSelected(dias.getInt("viernes") != 0);
+            Sabado.setSelected(dias.getInt("sabado") != 0);
+            Domingo.setSelected(dias.getInt("domingo") != 0);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
@@ -38,16 +76,12 @@ public class Configuracion extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        EditDatBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         AtencionSpin = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         HorarioTxtF1 = new javax.swing.JTextField();
-        HoraCmbBox1 = new javax.swing.JComboBox<>();
         HorarioTxtF2 = new javax.swing.JTextField();
-        HoraCmbBox2 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         CompartirChckBox = new javax.swing.JCheckBox();
         AceptarBtn = new javax.swing.JButton();
@@ -60,6 +94,7 @@ public class Configuracion extends javax.swing.JFrame {
         Viernes = new javax.swing.JCheckBox();
         Sabado = new javax.swing.JCheckBox();
         Domingo = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -71,16 +106,7 @@ public class Configuracion extends javax.swing.JFrame {
 
         jLabel5.setText("jLabel5");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Usuario:");
-
-        EditDatBtn.setText("Editar Datos");
-        EditDatBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditDatBtnActionPerformed(evt);
-            }
-        });
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setText("Tiempo de atención:");
 
@@ -93,10 +119,6 @@ public class Configuracion extends javax.swing.JFrame {
                 HorarioTxtF1ActionPerformed(evt);
             }
         });
-
-        HoraCmbBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "a.m", "p.m" }));
-
-        HoraCmbBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "a.m", "p.m" }));
 
         jLabel6.setText("Compartir información:");
 
@@ -128,6 +150,8 @@ public class Configuracion extends javax.swing.JFrame {
         Sabado.setText("S");
 
         Domingo.setText("D");
+
+        jLabel7.setText("-");
 
         jMenu1.setText("Citas");
 
@@ -191,26 +215,21 @@ public class Configuracion extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel6)
-                                .addComponent(jLabel1)
                                 .addComponent(jLabel4))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(EditDatBtn)
                                 .addComponent(CompartirChckBox)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(AtencionSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabel3))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(HorarioTxtF1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(HoraCmbBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(2, 2, 2)
+                                    .addComponent(AtencionSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(HorarioTxtF2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(HorarioTxtF1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(HoraCmbBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jLabel7)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(HorarioTxtF2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel11)
                             .addGap(36, 36, 36)
@@ -241,17 +260,12 @@ public class Configuracion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(HorarioTxtF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(HoraCmbBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(HorarioTxtF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(HoraCmbBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(CompartirChckBox))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(EditDatBtn))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
@@ -266,7 +280,7 @@ public class Configuracion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AceptarBtn)
                     .addComponent(SalirBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -301,12 +315,6 @@ public class Configuracion extends javax.swing.JFrame {
         user.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void EditDatBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDatBtnActionPerformed
-        Usuario user = new Usuario();
-        user.setVisible(true);
-        user.setLocationRelativeTo(null);
-    }//GEN-LAST:event_EditDatBtnActionPerformed
-
     private void AceptarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarBtnActionPerformed
         try {
             
@@ -321,8 +329,8 @@ public class Configuracion extends javax.swing.JFrame {
             configuracion.put("viernes",Viernes.isSelected());
             configuracion.put("sabado",Sabado.isSelected());
             configuracion.put("domingo",Domingo.isSelected());
-            configuracion.put("horainicio", HorarioTxtF1.getText() + " " + HoraCmbBox1.getSelectedItem());
-            configuracion.put("horafin", HorarioTxtF2.getText() + " " + HoraCmbBox2.getSelectedItem());
+            configuracion.put("horainicio", HorarioTxtF1.getText());
+            configuracion.put("horafin", HorarioTxtF2.getText());
             new Add().add("http://localhost/API_Citas/public/Medicos/edit/" + Login.username, configuracion);
         } catch (JSONException | IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -370,9 +378,6 @@ public class Configuracion extends javax.swing.JFrame {
     private javax.swing.JSpinner AtencionSpin;
     private javax.swing.JCheckBox CompartirChckBox;
     private javax.swing.JCheckBox Domingo;
-    private javax.swing.JButton EditDatBtn;
-    private javax.swing.JComboBox<String> HoraCmbBox1;
-    private javax.swing.JComboBox<String> HoraCmbBox2;
     private javax.swing.JTextField HorarioTxtF1;
     private javax.swing.JTextField HorarioTxtF2;
     private javax.swing.JCheckBox Jueves;
@@ -382,13 +387,13 @@ public class Configuracion extends javax.swing.JFrame {
     private javax.swing.JCheckBox Sabado;
     private javax.swing.JButton SalirBtn;
     private javax.swing.JCheckBox Viernes;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

@@ -1174,7 +1174,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -1288,14 +1287,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
 
         jMenu2.setText("Usuario");
 
-        jMenuItem1.setText("Login");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem1);
-
         jMenuItem2.setText("Crear usuario");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1390,12 +1381,8 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         Configuracion configuracion = new Configuracion();
         configuracion.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Login login = new Login();
-        login.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         this.PanelPacientes.setVisible(true);
@@ -1468,7 +1455,6 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

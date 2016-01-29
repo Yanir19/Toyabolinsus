@@ -87,9 +87,8 @@ public class Usuario extends javax.swing.JFrame {
         Domingo = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
         HorarioTxtF1 = new javax.swing.JTextField();
-        HoraCmbBox1 = new javax.swing.JComboBox<>();
         HorarioTxtF2 = new javax.swing.JTextField();
-        HoraCmbBox2 = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         ApellidoTxtF = new javax.swing.JTextField();
         UsuarioTxtF = new javax.swing.JTextField();
@@ -117,7 +116,7 @@ public class Usuario extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         AceptarBtn.setText("Aceptar");
         AceptarBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -180,14 +179,7 @@ public class Usuario extends javax.swing.JFrame {
             }
         });
 
-        HoraCmbBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "a.m", "p.m" }));
-
-        HoraCmbBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "a.m", "p.m" }));
-        HoraCmbBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                HoraCmbBox2ActionPerformed(evt);
-            }
-        });
+        jLabel13.setText("-");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -233,13 +225,11 @@ public class Usuario extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
-                .addComponent(HorarioTxtF1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(HorarioTxtF1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(HoraCmbBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(HorarioTxtF2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(HoraCmbBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(HorarioTxtF2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -276,9 +266,8 @@ public class Usuario extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(HorarioTxtF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(HoraCmbBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(HorarioTxtF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(HoraCmbBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel13))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -435,8 +424,8 @@ public class Usuario extends javax.swing.JFrame {
                                     Usuario.put("sabado",Sabado.isSelected());
                                     Usuario.put("domingo",Domingo.isSelected());
                                     Usuario.put("asistente", AsistentesList.getSelectedValue());
-                                    Usuario.put("horainicio", HorarioTxtF1.getText() + " " + HoraCmbBox1.getSelectedItem());
-                                    Usuario.put("horafin", HorarioTxtF2.getText() + " " + HoraCmbBox2.getSelectedItem());
+                                    Usuario.put("horainicio", HorarioTxtF1.getText() );
+                                    Usuario.put("horafin", HorarioTxtF2.getText());
                                     Usuario.put("medico", MedicoChckBox.isSelected());
                                 }
                                 
@@ -461,6 +450,8 @@ public class Usuario extends javax.swing.JFrame {
         }else{
              JOptionPane.showMessageDialog(null, "El campo 'Nombre' no puede estar vacío."  ,"Alerta.", JOptionPane.WARNING_MESSAGE);
         }
+        
+        dispose();
     }//GEN-LAST:event_AceptarBtnActionPerformed
 
     private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed
@@ -474,10 +465,6 @@ public class Usuario extends javax.swing.JFrame {
     private void HorarioTxtF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HorarioTxtF1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_HorarioTxtF1ActionPerformed
-
-    private void HoraCmbBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HoraCmbBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_HoraCmbBox2ActionPerformed
 
     
     public void StatusMedico(){
@@ -553,8 +540,6 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JCheckBox Domingo;
     private javax.swing.JButton EditarBtn;
     private javax.swing.JTextField EspecialidadTxtF;
-    private javax.swing.JComboBox<String> HoraCmbBox1;
-    private javax.swing.JComboBox<String> HoraCmbBox2;
     private javax.swing.JTextField HorarioTxtF1;
     private javax.swing.JTextField HorarioTxtF2;
     private javax.swing.JTextField IdentificacionTxtF;
@@ -575,6 +560,7 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
