@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
+import org.apache.http.client.ClientProtocolException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -36,9 +36,6 @@ public class Configuracion extends javax.swing.JFrame {
      * Creates new form Configuracion
      */
     
-
-    
-       
     public Configuracion() throws IOException {
         
         try {
@@ -95,7 +92,8 @@ public class Configuracion extends javax.swing.JFrame {
         } catch (JSONException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+
+}
     
     private int hex( String color_hex )
         {

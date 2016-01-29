@@ -1380,6 +1380,13 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        Configuracion configuracion = null;
+        try {
+            configuracion = new Configuracion();
+        } catch (IOException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        configuracion.setVisible(true);
         try {
             Configuracion configuracion = null;
             configuracion = new Configuracion();
@@ -1389,6 +1396,16 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
             Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Login login = null;
+        try {
+            login = new Login();
+        } catch (IOException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        login.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         this.PanelPacientes.setVisible(true);
