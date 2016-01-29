@@ -66,7 +66,7 @@ public class Configuracion extends javax.swing.JFrame {
             return Integer.parseInt(color_hex,  16 );
         }
         private void disenoLabel(JLabel actual){
-            font=font  = font.deriveFont(Font.ITALIC, 14);
+            font=font  = font.deriveFont(Font.ROMAN_BASELINE, 14);
             actual.setFont(font);
     }
     
@@ -349,7 +349,12 @@ public class Configuracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Login login = new Login();
+        Login login = null;
+        try {
+            login = new Login();
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         login.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
