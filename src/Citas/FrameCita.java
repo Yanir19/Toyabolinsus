@@ -1380,14 +1380,9 @@ public class FrameCita extends javax.swing.JFrame  implements ActionListener{
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        Configuracion configuracion = null;
+
         try {
-            configuracion = new Configuracion();
-        } catch (IOException ex) {
-            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        configuracion.setVisible(true);
-        try {
+            Configuracion configuracion;
             configuracion = new Configuracion();
             configuracion.setVisible(true);
             this.dispose();
