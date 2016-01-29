@@ -5,11 +5,23 @@
  */
 package Citas;
 
+import Services.Add;
+import Services.Leer;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.apache.http.client.ClientProtocolException;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -17,14 +29,91 @@ import org.json.simple.parser.ParseException;
  * @author Yanir
  */
 public class Configuracion extends javax.swing.JFrame {
-
+    Color colorDelPapa;
+    Color colorBotones;
+    Font font;
     /**
      * Creates new form Configuracion
      */
-    public Configuracion() {
+    
+    public Configuracion() throws IOException {
+        
+        try {
         initComponents();
+            Leer rutasLeer = new Leer();
+            JSONArray config = new JSONArray();
+            JSONObject obj = new JSONObject();
+            JSONObject horario = new JSONObject();
+            JSONObject medico = new JSONObject();
+            JSONObject dias = new JSONObject();
+            config = rutasLeer.leer("http://localhost/API_Citas/public/Medicos/configuracion/"+Login.username);   
+            obj = (JSONObject) config.get(0);
+            horario = obj.getJSONObject("horario");
+            medico = obj.getJSONObject("medico");
+            dias = obj.getJSONObject("dias");
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            HorarioTxtF1.setText(horario.getString("horainicio"));
+            HorarioTxtF2.setText(horario.getString("horafin"));
+            CompartirChckBox.setSelected(medico.getInt("comparte") != 0);
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            AtencionSpin.setValue(medico.get("tiempoatencion"));
+            Lunes.setSelected(dias.getInt("lunes") != 0);
+            Martes.setSelected(dias.getInt("martes") != 0);
+            Miercoles.setSelected(dias.getInt("miercoles") != 0);
+            Jueves.setSelected(dias.getInt("jueves") != 0);
+            Viernes.setSelected(dias.getInt("viernes") != 0);
+            Sabado.setSelected(dias.getInt("sabado") != 0);
+            Domingo.setSelected(dias.getInt("domingo") != 0);
+        Image icon = new ImageIcon(getClass().getResource("/Iconos/medicos-de-tampico.png")).getImage();
+        setIconImage(icon);
+        colorBotones = new Color (hex ("2C3E50"));//Color d elos botonte
+        colorDelPapa = new Color (hex("A9D0F5"));//Color del backgorud del papa
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("Sertig.otf"));
+            font  = font.deriveFont(Font.BOLD, 11);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    //        disenoLabel(jLabel1);
+        disenoLabel(jLabel2);
+        disenoLabel(jLabel3);
+        disenoLabel(jLabel4);
+        disenoLabel(jLabel5);
+        disenoLabel(jLabel6);
+        disenoLabel(jLabel11);
+    //        disenoBotones(EditDatBtn);
+        disenoBotones(AceptarBtn);
+        disenoBotones(SalirBtn);
+        this.getContentPane().setBackground(colorDelPapa);
+        setTitle("Configuracion");
+        } catch (ClientProtocolException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
     }
-
+    
+}
+    
+    private int hex( String color_hex )
+        {
+            return Integer.parseInt(color_hex,  16 );
+        }
+        private void disenoLabel(JLabel actual){
+            font=font  = font.deriveFont(Font.ROMAN_BASELINE, 14);
+            actual.setFont(font);
+    }
+    
+ private void disenoBotones(JButton actual){
+       actual.setBackground(colorBotones);
+       font  = font.deriveFont(Font.TYPE1_FONT, 13);
+       actual.setFont(font);
+       actual.setBorderPainted(false);
+       actual.setFocusPainted(false);
+        //actual.setContentAreaFilled(false);
+        
+       actual.setOpaque(false);
+   }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,7 +135,7 @@ public class Configuracion extends javax.swing.JFrame {
         HorarioTxtF2 = new javax.swing.JTextField();
         HoraCmbBox2 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        CompartirCheckB = new javax.swing.JCheckBox();
+        CompartirChckBox = new javax.swing.JCheckBox();
         AceptarBtn = new javax.swing.JButton();
         SalirBtn = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
@@ -98,6 +187,11 @@ public class Configuracion extends javax.swing.JFrame {
         jLabel6.setText("Compartir información:");
 
         AceptarBtn.setText("Aceptar");
+        AceptarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarBtnActionPerformed(evt);
+            }
+        });
 
         SalirBtn.setText("Salir");
         SalirBtn.setMaximumSize(new java.awt.Dimension(71, 23));
@@ -188,7 +282,7 @@ public class Configuracion extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(EditDatBtn)
-                                .addComponent(CompartirCheckB)
+                                .addComponent(CompartirChckBox)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
@@ -239,7 +333,7 @@ public class Configuracion extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(CompartirCheckB))
+                    .addComponent(CompartirChckBox))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -272,6 +366,7 @@ public class Configuracion extends javax.swing.JFrame {
         try {
             FrameCita PanelCitas = new FrameCita();
             PanelCitas.setVisible(true);
+            this.dispose();
         } catch (IOException | JSONException | ParseException | java.text.ParseException ex) {
             Logger.getLogger(FrameCita.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -279,25 +374,68 @@ public class Configuracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        Configuracion configuracion = new Configuracion();
+        Configuracion configuracion = null;
+        try {
+            configuracion = new Configuracion();
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         configuracion.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Login login = new Login();
+        Login login = null;
+        try {
+            login = new Login();
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         login.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Usuario user = new Usuario();
+        Usuario user = null;
+        try {
+            user = new Usuario();
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         user.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void EditDatBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDatBtnActionPerformed
-        Usuario user = new Usuario();
+        Usuario user = null;
+        try {
+            user = new Usuario();
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         user.setVisible(true);
         user.setLocationRelativeTo(null);
     }//GEN-LAST:event_EditDatBtnActionPerformed
+
+    private void AceptarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarBtnActionPerformed
+        try {
+            
+            JSONObject configuracion=new JSONObject();
+            configuracion.put("username", CompartirChckBox.isSelected());
+            configuracion.put("comparte", CompartirChckBox.isSelected());
+            configuracion.put("tiempoatencion", AtencionSpin.getValue());
+            configuracion.put("lunes",Lunes.isSelected());
+            configuracion.put("martes",Martes.isSelected());
+            configuracion.put("miercoles",Miercoles.isSelected());
+            configuracion.put("jueves",Jueves.isSelected());
+            configuracion.put("viernes",Viernes.isSelected());
+            configuracion.put("sabado",Sabado.isSelected());
+            configuracion.put("domingo",Domingo.isSelected());
+            configuracion.put("horainicio", HorarioTxtF1.getText() + " " + HoraCmbBox1.getSelectedItem());
+            configuracion.put("horafin", HorarioTxtF2.getText() + " " + HoraCmbBox2.getSelectedItem());
+            new Add().add("http://localhost/API_Citas/public/Medicos/edit/" + Login.username, configuracion);
+        } catch (JSONException | IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                                
+    }//GEN-LAST:event_AceptarBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,7 +467,11 @@ public class Configuracion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Configuracion().setVisible(true);
+                try {
+                    new Configuracion().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -337,7 +479,7 @@ public class Configuracion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AceptarBtn;
     private javax.swing.JSpinner AtencionSpin;
-    private javax.swing.JCheckBox CompartirCheckB;
+    private javax.swing.JCheckBox CompartirChckBox;
     private javax.swing.JCheckBox Domingo;
     private javax.swing.JButton EditDatBtn;
     private javax.swing.JComboBox<String> HoraCmbBox1;
